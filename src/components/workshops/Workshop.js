@@ -142,9 +142,8 @@ export default function Workshop() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <CustomSkeleton resultPerPage={resultPerPage} column={9} />
-                  ) : (
-                    workshops &&
+                    <CustomSkeleton resultPerPage={resultPerPage} column={7} />
+                  ) : workshops && workshops.length > 0 ? (
                     workshops.map((workshop, i) => (
                       <tr key={workshop?._id} className="odd">
                         <td className="text-center">{skip + i + 1}</td>
@@ -181,6 +180,12 @@ export default function Workshop() {
                         </td>
                       </tr>
                     ))
+                  ) : (
+                    <tr>
+                      <td>
+                        <strong>No Workshop Found</strong>
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </Table>
