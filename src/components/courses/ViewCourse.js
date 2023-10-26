@@ -77,15 +77,14 @@ const ViewCourse = () => {
     }
   };
 
-  const deleteImage = async (poster) => {
+  const deleteImage = async (posterUrl) => {
     if (
       window.confirm("Are you sure you want to delete this Image?") === true
     ) {
       try {
         setDel(true);
         const res = await axiosInstance.delete(
-          `/api/admin/delete-poster/${id}`,
-          { poster },
+          `/api/admin/delete-poster/${id}/${posterUrl}`,
           {
             headers: { Authorization: token },
           }
@@ -229,7 +228,7 @@ const ViewCourse = () => {
                     {course?.poster.length === 0 && <p>No Image Found</p>}
                     {course?.poster &&
                       course?.poster.length > 0 &&
-                      course?.poster.map((img, i) => (
+                      course?.poster.map((posterUrl, i) => (
                         <div
                           key={i}
                           style={{
@@ -237,7 +236,7 @@ const ViewCourse = () => {
                           }}
                         >
                           <img
-                            src={img}
+                            src={posterUrl}
                             alt=""
                             style={{
                               width: "250px",
@@ -247,7 +246,7 @@ const ViewCourse = () => {
                             }}
                           />
                           <Button
-                            onClick={() => deleteImage(img)}
+                            onClick={() => deleteImage(posterUrl)}
                             variant="danger"
                             className="trash"
                           >
