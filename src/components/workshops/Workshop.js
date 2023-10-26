@@ -38,21 +38,24 @@ export default function Workshop() {
       error: "",
     });
 
-  const deleteUser = async (id) => {
+  const deleteWorkshop = async (id) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this user?\n\nNote: All Related orders, addresses, coupons, cart and reviews will also be deleted."
+        "Are you sure you want to delete this user?\n\n This process cannot be undone."
       ) === true
     ) {
       try {
         setDel(true);
-        const res = await axiosInstance.delete(`/api/admin/user/${id}`, {
-          headers: { Authorization: token },
-        });
+        const res = await axiosInstance.delete(
+          `/api/admin/delete-workshop/${id}`,
+          {
+            headers: { Authorization: token },
+          }
+        );
         setDel(false);
       } catch (error) {
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     }
@@ -168,7 +171,7 @@ export default function Workshop() {
                           </Button>
                           <Button
                             onClick={() => {
-                              deleteUser(workshop._id);
+                              deleteWorkshop(workshop._id);
                             }}
                             type="danger"
                             className="btn btn-danger ms-2"
