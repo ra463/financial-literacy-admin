@@ -84,7 +84,7 @@ const ViewCourse = () => {
       try {
         setDel(true);
         const res = await axiosInstance.delete(
-          `/api/admin/delete-poster/${id}/${posterUrl}`,
+          `/api/admin/delete-poster/${id}/?posterUrl=${posterUrl}`,
           {
             headers: { Authorization: token },
           }
