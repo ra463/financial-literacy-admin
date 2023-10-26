@@ -26,7 +26,7 @@ const ViewCourse = () => {
 
   const [modalShow, setModalShow] = useState(false);
   const [modalImageShow, setModalImageShow] = useState(false);
-  // const [del, setDel] = useState(false);
+  const [del, setDel] = useState(false);
   const [sectionModalShow, setSectionModalShow] = useState(false);
 
   const [{ loading, error, course }, dispatch] = useReducer(reducer, {
@@ -77,32 +77,32 @@ const ViewCourse = () => {
     }
   };
 
-  // const deleteImage = async (poster) => {
-  //   if (
-  //     window.confirm("Are you sure you want to delete this Image?") === true
-  //   ) {
-  //     try {
-  //       setDel(true);
-  //       const res = await axiosInstance.delete(
-  //         `/api/admin/delete-poster/${id}`,
-  //         { poster },
-  //         {
-  //           headers: { Authorization: token },
-  //         }
-  //       );
-  //       setDel(false);
-  //       if (res.data) {
-  //         toast.success("Poster Deleted Succesfully", {
-  //           position: toast.POSITION.BOTTOM_CENTER,
-  //         });
-  //       }
-  //     } catch (error) {
-  //       toast.error(getError(error), {
-  //         position: toast.POSITION.BOTTOM_CENTER,
-  //       });
-  //     }
-  //   }
-  // };
+  const deleteImage = async (poster) => {
+    if (
+      window.confirm("Are you sure you want to delete this Image?") === true
+    ) {
+      try {
+        setDel(true);
+        const res = await axiosInstance.delete(
+          `/api/admin/delete-poster/${id}`,
+          { poster },
+          {
+            headers: { Authorization: token },
+          }
+        );
+        setDel(false);
+        if (res.data) {
+          toast.success("Poster Deleted Succesfully", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+      } catch (error) {
+        toast.error(getError(error), {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,7 +125,7 @@ const ViewCourse = () => {
       }
     };
     fetchData();
-  }, [id, token, deleteLoading]);
+  }, [id, del, token, deleteLoading]);
 
   const getDateTime = (dt) => {
     const dT = dt.split(".")[0].split("T");
@@ -247,7 +247,7 @@ const ViewCourse = () => {
                             }}
                           />
                           <Button
-                            // onClick={() => deleteImage(img)}
+                            onClick={() => deleteImage(img)}
                             variant="danger"
                             className="trash"
                           >
