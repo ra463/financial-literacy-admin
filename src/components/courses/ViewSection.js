@@ -167,10 +167,9 @@ const ViewSection = () => {
                               className="btn btn-danger"
                               onClick={() => deleteLecture(les._id)}
                             >
-                              {deleteLoading && (
+                              {deleteLoading ? (
                                 <LoadingBox className="m-auto" />
-                              )}
-                              {!deleteLoading && (
+                              ) : (
                                 <FaTrashAlt className="m-auto" />
                               )}
                             </Button>
@@ -186,8 +185,8 @@ const ViewSection = () => {
                       ))
                     ) : (
                       <tr>
-                        <td>
-                          <strong>No Lesson Found</strong>
+                        <td colSpan={4} className="text-center">
+                          No Lesson(s) Found
                         </td>
                       </tr>
                     )}

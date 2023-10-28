@@ -32,11 +32,13 @@ export default function Users() {
 
   const curPageHandler = (p) => setCurPage(p);
 
-  const [{ loading, error, users, filteredUserCount }, dispatch] =
-    useReducer(userReducer, {
+  const [{ loading, error, users, filteredUserCount }, dispatch] = useReducer(
+    userReducer,
+    {
       loading: true,
       error: "",
-    });
+    }
+  );
 
   const deleteUser = async (id) => {
     if (
@@ -91,11 +93,6 @@ export default function Users() {
   const numOfPages = Math.ceil(filteredUserCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
 
-  const getDateTime = (dt) => {
-    const dT = dt.split(".")[0].split("T");
-    return `${dT[0]} ${dT[1]}`;
-  };
-
   return (
     <motion.div
       initial={{ x: "-100%" }}
@@ -138,54 +135,65 @@ export default function Users() {
                     <th>Firstname</th>
                     <th>Lastname</th>
                     <th>Email</th>
-                    <th>Reg. Date</th>
                     <th>Mobile No.</th>
-                    {/* <th>Fax</th> */}
                     <th>Role</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <CustomSkeleton resultPerPage={resultPerPage} column={9} />
-                  ) : (
-                    users &&
+                    <CustomSkeleton resultPerPage={resultPerPage} column={7} />
+                  ) : users && users.length > 0 ? (
                     users.map((user, i) => (
                       <tr key={user?._id} className="odd">
                         <td className="text-center">{skip + i + 1}</td>
                         <td>{user?.firstname}</td>
                         <td>{user?.lastname}</td>
                         <td>{user?.email}</td>
-                        <td>
-                          {getDateTime(user?.createdAt && user?.createdAt)}
-                        </td>
                         <td>{user?.mobile_no}</td>
-                        {/* <td>{user.fax}</td> */}
-                        <td>{user?.role}</td>
-                        {user?.role !== "intermediary" && (
-                          <td>
-                            <Button
-                              onClick={() => {
-                                navigate(`/admin/view/user/${user._id}`);
-                              }}
-                              type="success"
-                              className="btn btn-primary"
+                        <td>
+                          {user?.role === "admin" ? (
+                            <span style={{ color: "red", fontWeight: "bold" }}>
+                              {user?.role.charAt(0).toUpperCase() +
+                                user?.role.slice(1)}
+                            </span>
+                          ) : (
+                            <span
+                              style={{ color: "green", fontWeight: "bold" }}
                             >
-                              <FaEye />
-                            </Button>
-                            <Button
-                              onClick={() => {
-                                deleteUser(user._id);
-                              }}
-                              type="danger"
-                              className="btn btn-danger ms-2"
-                            >
-                              <FaTrashAlt className="m-auto" />
-                            </Button>
-                          </td>
-                        )}
+                              {user?.role.charAt(0).toUpperCase() +
+                                user?.role.slice(1)}
+                            </span>
+                          )}
+                        </td>
+                        <td>
+                          <Button
+                            onClick={() => {
+                              navigate(`/admin/view/user/${user._id}`);
+                            }}
+                            type="success"
+                            className="btn btn-primary"
+                          >
+                            <FaEye />
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              deleteUser(user._id);
+                            }}
+                            type="danger"
+                            className="btn btn-danger ms-2"
+                          >
+                            <FaTrashAlt className="m-auto" />
+                          </Button>
+                        </td>
                       </tr>
                     ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} className="text-center">
+                        No User(s) Found
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </Table>

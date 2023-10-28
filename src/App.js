@@ -22,6 +22,8 @@ import ViewCourse from "./components/courses/ViewCourse";
 import ViewSection from "./components/courses/ViewSection";
 import Workshop from "./components/workshops/Workshop";
 import Viewworkshop from "./components/workshops/Viewworkshop";
+import Transaction from "./components/transaction/Transaction";
+import ViewTransaction from "./components/transaction/ViewTransaction";
 
 function App() {
   const { state } = useContext(Store);
@@ -37,10 +39,12 @@ function App() {
     { path: "/admin/users", element: <Users /> },
     { path: "/admin/courses", element: <Courses /> },
     { path: "/admin/workshops", element: <Workshop /> },
+    { path: "/admin/transactions", element: <Transaction /> },
     { path: "/admin/view/course/:id", element: <ViewCourse /> },
     { path: "/admin/view/user/:id", element: <ViewUser /> },
     { path: "/admin/view/course/:id/:sectionId", element: <ViewSection /> },
     { path: "/admin/view/workshop/:id", element: <Viewworkshop /> },
+    { path: "/admin/view/transaction/:id", element: <ViewTransaction /> },
   ];
 
   return (

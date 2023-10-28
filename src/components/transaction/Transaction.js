@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
-import { getCoursesReducer } from "../../reducers/course";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import MessageBox from "../layout/MessageBox";
@@ -18,11 +17,10 @@ import axiosInstance from "../../utils/axiosUtil";
 import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import CustomSkeleton from "../layout/CustomSkeleton";
-import CreateCourseModel from "./CreateCourses";
 import LoadingBox from "../layout/LoadingBox";
-import DeleteCategory from "./DeleteCategory";
+import { getTransactionReducer } from "../../reducers/transaction";
 
-export default function Courses() {
+export default function Transaction() {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { token } = state;
@@ -32,36 +30,34 @@ export default function Courses() {
   const [searchInput, setSearchInput] = useState("");
   const [query, setQuery] = useState("");
   const [del, setDel] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const [allCatShow, setallCatShow] = useState(false);
 
   const curPageHandler = (p) => setCurPage(p);
 
   const [
-    { deleteLoading, loading, error, courses, filteredCourseCount },
+    { deleteLoading, loading, error, transactions, filteredTransactionsCount },
     dispatch,
-  ] = useReducer(getCoursesReducer, {
+  ] = useReducer(getTransactionReducer, {
     loading: true,
     error: "",
   });
 
-  const deleteCourse = async (id) => {
+  const deleteTransaction = async (id) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this Course?\n\nNote: All Related lectures, photos, videos, Enrolled-Students will also be deleted."
+        "Are you sure you want to delete this Transaction?\n\nNote: All Related details like TransactionId and all other things will also be deleted Permanently."
       ) === true
     ) {
       try {
         setDel(true);
         const res = await axiosInstance.delete(
-          `/api/admin/delete-course/${id}`,
+          `/api/admin/delete-transaction/${id}`,
           {
             headers: { Authorization: token },
           }
         );
         setDel(false);
         if (res.data) {
-          toast.success("Course Deleted Succesfully", {
+          toast.success("Transaction Deleted Succesfully", {
             position: toast.POSITION.TOP_CENTER,
           });
         }
@@ -78,7 +74,7 @@ export default function Courses() {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const res = await axiosInstance.get(
-          `/api/admin/getallcourses/?keyword=${query}&resultPerPage=${resultPerPage}&currentPage=${curPage}`,
+          `/api/admin/get-all-transaction/?keyword=${query}&resultPerPage=${resultPerPage}&currentPage=${curPage}`,
           {
             headers: { Authorization: token },
           }
@@ -97,7 +93,7 @@ export default function Courses() {
     fetchData();
   }, [token, del, curPage, resultPerPage, query]);
 
-  const numOfPages = Math.ceil(filteredCourseCount / resultPerPage);
+  const numOfPages = Math.ceil(filteredTransactionsCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
 
   const getDateTime = (dt) => {
@@ -119,15 +115,6 @@ export default function Courses() {
           <>
             <Card>
               <Card.Header>
-                <Button onClick={() => setModalShow(true)}>
-                  Create New Course
-                </Button>
-                <Button
-                  style={{ marginLeft: "1rem" }}
-                  onClick={() => setallCatShow(true)}
-                >
-                  Categories
-                </Button>
                 <div className="search-box float-end">
                   <InputGroup>
                     <Form.Control
@@ -154,10 +141,10 @@ export default function Courses() {
                   <thead>
                     <tr>
                       <th>S.No</th>
-                      <th>Title</th>
-                      <th>Category</th>
-                      <th>Price</th>
-                      <th>Poster</th>
+                      <th>TransactionId</th>
+                      <th>Amount</th>
+                      <th>status</th>
+                      <th>Created By</th>
                       <th>Created At</th>
                       <th>Actions</th>
                     </tr>
@@ -168,36 +155,28 @@ export default function Courses() {
                         resultPerPage={resultPerPage}
                         column={7}
                       />
-                    ) : courses && courses.length > 0 ? (
-                      courses.map((course, i) => (
-                        <tr key={course?._id} className="odd">
+                    ) : transactions && transactions.length > 0 ? (
+                      transactions.map((transaction, i) => (
+                        <tr key={transaction?._id} className="odd">
                           <td className="text-center">{skip + i + 1}</td>
-                          <td>{course?.title}</td>
-                          <td>{course?.category}</td>
-                          <td>${course?.price}</td>
+                          <td>{transaction?.transactionId}</td>
+                          <td>${transaction?.amount}</td>
+                          <td>{transaction?.status}</td>
                           <td>
-                            {course?.poster.length > 0 ? (
-                              <img
-                                src={course.poster[0]}
-                                alt=""
-                                style={{
-                                  width: "70px",
-                                  height: "50px",
-                                }}
-                              />
-                            ) : (
-                              <b>No Poster</b>
-                            )}
+                            {transaction?.user.firstname}{" "}
+                            {transaction?.user.lastname}
                           </td>
                           <td>
                             {getDateTime(
-                              course?.createdAt && course?.createdAt
+                              transaction?.createdAt && transaction?.createdAt
                             )}
                           </td>
                           <td>
                             <Button
                               onClick={() => {
-                                navigate(`/admin/view/course/${course._id}`);
+                                navigate(
+                                  `/admin/view/transaction/${transaction._id}`
+                                );
                               }}
                               type="success"
                               className="btn btn-primary"
@@ -207,7 +186,7 @@ export default function Courses() {
                             <Button
                               disabled={loading ? true : false}
                               onClick={() => {
-                                deleteCourse(course._id);
+                                deleteTransaction(transaction._id);
                               }}
                               type="danger"
                               className="btn btn-danger ms-2"
@@ -224,7 +203,7 @@ export default function Courses() {
                     ) : (
                       <tr>
                         <td colSpan={7} className="text-center">
-                          No Course(s) Found
+                          No Transactions Found
                         </td>
                       </tr>
                     )}
@@ -249,7 +228,7 @@ export default function Courses() {
                     </Form.Select>
                   </Form.Group>
                 </div>
-                {resultPerPage < filteredCourseCount && (
+                {resultPerPage < filteredTransactionsCount && (
                   <CustomPagination
                     pages={numOfPages}
                     pageHandler={curPageHandler}
@@ -258,14 +237,6 @@ export default function Courses() {
                 )}
               </Card.Footer>
             </Card>
-            <CreateCourseModel
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-            />
-            <DeleteCategory
-              show={allCatShow}
-              onHide={() => setallCatShow(false)}
-            />
           </>
         )}
         <ToastContainer />

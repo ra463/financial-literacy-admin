@@ -291,7 +291,7 @@ const ViewCourse = () => {
                 </div>
               </Card.Header>
               <Card.Body className="view-section">
-                {course?.lectures.length === 0 && <p>No Lecture Found</p>}
+                {course?.lectures.length === 0 && <p>No Lecture(s) Found</p>}
                 {course?.lectures &&
                   course?.lectures.length > 0 &&
                   course?.lectures.map((Lecture, i) => (
@@ -331,7 +331,7 @@ const ViewCourse = () => {
                           </div>
                         </Card.Header>
                       </Card>
-                      <Table striped bordered hover>
+                      <Table responsive striped bordered hover>
                         <thead>
                           <tr>
                             <th>S.No</th>
@@ -368,8 +368,8 @@ const ViewCourse = () => {
                             ))
                           ) : (
                             <tr>
-                              <td>
-                                <strong>No Lesson Found</strong>
+                              <td colSpan={4} className="text-center">
+                                No Lesson(s) Found
                               </td>
                             </tr>
                           )}

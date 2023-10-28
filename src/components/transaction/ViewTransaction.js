@@ -1,24 +1,21 @@
-import React, { useEffect, useReducer, useContext, useState } from "react";
+import React, { useEffect, useReducer, useContext } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
-import { viewUserReducer as reducer } from "../../reducers/user";
+import { viewTransactionReducer as reducer } from "../../reducers/transaction";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import MessageBox from "../layout/MessageBox";
-import EditUserModel from "./EditUser.js";
 import axiosInstance from "../../utils/axiosUtil";
-import { FaEdit } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { motion } from "framer-motion";
 
-const ViewUser = () => {
+const ViewTransaction = () => {
   const { state } = useContext(Store);
   const { token } = state;
   const { id } = useParams(); // user/:id
 
-  const [modalShow, setModalShow] = useState(false);
-  const [{ loading, error, user }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, transaction }, dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
   });
@@ -28,17 +25,20 @@ const ViewUser = () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
 
-        const { data } = await axiosInstance.get(`/api/admin/user/${id}`, {
-          headers: { Authorization: token },
-        });
+        const { data } = await axiosInstance.get(
+          `/api/admin/get-transaction/${id}`,
+          {
+            headers: { Authorization: token },
+          }
+        );
 
         dispatch({ type: "FETCH_SUCCESS", payload: data });
-      } catch (err) {
+      } catch (error) {
         dispatch({
           type: "FETCH_FAIL",
-          payload: getError(err),
+          payload: getError(error),
         });
-        toast.error(getError(err), {
+        toast.error(getError(error), {
           position: toast.POSITION.BOTTOM_CENTER,
         });
       }
@@ -69,55 +69,53 @@ const ViewUser = () => {
                   {loading ? (
                     <Skeleton />
                   ) : (
-                    `${user?.firstname} ${user?.lastname}`
+                    `Transaction ID: ${transaction?.transactionId}`
                   )}{" "}
                   Details
                 </Card.Title>
-                <div className="card-tools">
-                  <FaEdit
-                    style={{ color: "blue" }}
-                    onClick={() => setModalShow(true)}
-                  />
-                </div>
               </Card.Header>
               <Card.Body>
                 <Row>
                   <Col md={4}>
                     <p className="mb-0">
-                      <strong>Firstname</strong>
+                      <strong>Transaction ID</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : user?.firstname}</p>
+                    <p>{loading ? <Skeleton /> : transaction?.transactionId}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
-                      <strong>Lastname</strong>
+                      <strong>Transaction Done By</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : user?.lastname}</p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        `${transaction?.user?.firstname}``${transaction?.user?.lastname}`
+                      )}
+                    </p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
-                      <strong>Email</strong>
+                      <strong>Transaction Amount</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : user?.email}</p>
+                    <p>{loading ? <Skeleton /> : transaction?.amount}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
-                      <strong>Mobile No.</strong>
+                      <strong>Transaction Status</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : user?.mobile_no}</p>
-                  </Col>
-                  <Col md={4}>
-                    <p className="mb-0">
-                      <strong>Role</strong>
-                    </p>
-                    <p>{loading ? <Skeleton /> : user?.role}</p>
+                    <p>{loading ? <Skeleton /> : transaction?.status}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
                       <strong>Created At</strong>
                     </p>
                     <p>
-                      {loading ? <Skeleton /> : getDateTime(user?.createdAt)}
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        getDateTime(transaction?.createdAt)
+                      )}
                     </p>
                   </Col>
                   <Col md={4}>
@@ -125,17 +123,17 @@ const ViewUser = () => {
                       <strong>Last Update</strong>
                     </p>
                     <p>
-                      {loading ? <Skeleton /> : getDateTime(user?.updatedAt)}
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        getDateTime(transaction?.updatedAt)
+                      )}
                     </p>
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
-            <Card
-              style={{
-                marginTop: "1rem",
-              }}
-            >
+            {/* <Card>
               <Card.Header>
                 <Card.Title>
                   {loading ? (
@@ -163,12 +161,7 @@ const ViewUser = () => {
                   />
                 )}
               </Card.Body>
-            </Card>
-
-            <EditUserModel
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-            />
+            </Card> */}
             <ToastContainer />
           </>
         )}
@@ -177,4 +170,4 @@ const ViewUser = () => {
   );
 };
 
-export default ViewUser;
+export default ViewTransaction;
