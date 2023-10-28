@@ -22,7 +22,7 @@ export default function AdminProtectedRoute({ children }) {
     };
 
     checkToken();
-  }, [token]);
+  }, [token, ctxDispatch, navigate]);
 
   return userInfo ? (
     userInfo.role === "admin" ? (

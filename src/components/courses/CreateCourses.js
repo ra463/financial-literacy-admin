@@ -27,6 +27,7 @@ export default function CreateCourseModel(props) {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const [class_type, setClass_type] = useState("");
   const [creater_name, setCreater_name] = useState("");
   const [creater_title, setCreater_title] = useState("");
   const [addModalShow, setAddModalShow] = useState(false);
@@ -36,6 +37,7 @@ export default function CreateCourseModel(props) {
     setDescription("");
     setCategory("");
     setPrice("");
+    setClass_type("");
     setCreater_name("");
     setCreater_title("");
   };
@@ -53,6 +55,7 @@ export default function CreateCourseModel(props) {
           description,
           category,
           price,
+          class_type,
           creater_name,
           creater_title,
         },
@@ -102,7 +105,20 @@ export default function CreateCourseModel(props) {
       }
     };
     fetchData();
-  }, [categories]);
+  }, [categories, token]);
+
+  const classes = [
+    "LKG",
+    "UKG",
+    "1st",
+    "2nd",
+    "3rd",
+    "4th",
+    "5th",
+    "6th",
+    "7th",
+    "8th",
+  ];
 
   return (
     <>
@@ -168,9 +184,29 @@ export default function CreateCourseModel(props) {
                   </InputGroup>
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="lastname">
+                  <Form.Label>Class</Form.Label>
+                  <InputGroup>
+                    <Form.Select
+                      value={class_type}
+                      onChange={(e) => setClass_type(e.target.value)}
+                      aria-label="Default select example"
+                      required
+                    >
+                      <option value="">Select Class</option>
+                      {classes.map((class_type) => (
+                        <option key={class_type} value={class_type}>
+                          {class_type}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </InputGroup>
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="mobile_no">
                   <Form.Label>Price</Form.Label>
                   <Form.Control
+                    type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required

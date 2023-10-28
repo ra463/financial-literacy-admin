@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Store } from "../../Store";
 import "./SideNavBar.css";
-// import edwin_logo from "./edwin_logo.jpg";
 import { MdOutlineReviews, MdOutlineSpaceDashboard } from "react-icons/md";
 import { HiUsers } from "react-icons/hi";
 import { BiSolidBook } from "react-icons/bi";

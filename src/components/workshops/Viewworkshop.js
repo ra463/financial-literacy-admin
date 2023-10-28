@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useContext, useState } from "react";
+import React, { useEffect, useReducer, useContext } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
 import { viewWorkshopReducer as reducer } from "../../reducers/workshopReducer";
@@ -44,7 +44,7 @@ const Viewworkshop = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, token]);
 
   const getDateTime = (dt) => {
     const dT = dt.split(".")[0].split("T");

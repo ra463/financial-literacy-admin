@@ -46,12 +46,9 @@ export default function Workshop() {
     ) {
       try {
         setDel(true);
-        const res = await axiosInstance.delete(
-          `/api/admin/delete-workshop/${id}`,
-          {
-            headers: { Authorization: token },
-          }
-        );
+        await axiosInstance.delete(`/api/admin/delete-workshop/${id}`, {
+          headers: { Authorization: token },
+        });
         setDel(false);
       } catch (error) {
         toast.error(getError(error), {

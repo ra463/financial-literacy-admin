@@ -5,9 +5,10 @@ import { editReducer as reducer } from "../../reducers/commonReducer";
 // import { uploadImage } from "../../utils/uploadImage";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Modal, Form, Button, Container } from "react-bootstrap";
+import { Modal, Form, Button, Container, InputGroup } from "react-bootstrap";
 import LoadingBox from "../layout/LoadingBox";
 import axiosInstance from "../../utils/axiosUtil";
+import { getCategoryReducer } from "../../reducers/course";
 
 export default function EditCourseModal(props) {
   const navigate = useNavigate();
@@ -20,9 +21,15 @@ export default function EditCourseModal(props) {
     error: "",
   });
 
+  const [{ categories }, dispatch1] = useReducer(getCategoryReducer, {
+    loading: false,
+    error: "",
+  });
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [class_type, setClass_type] = useState("");
   const [price, setPrice] = useState("");
   const [creater_name, setCreater_name] = useState("");
   const [creater_title, setCreater_title] = useState("");
@@ -31,6 +38,7 @@ export default function EditCourseModal(props) {
     setTitle("");
     setDescription("");
     setCategory("");
+    setClass_type("");
     setPrice("");
     setCreater_name("");
     setCreater_title("");
@@ -50,6 +58,7 @@ export default function EditCourseModal(props) {
         setTitle(course.title);
         setDescription(course.description);
         setCategory(course.category);
+        setClass_type(course.class_type);
         setPrice(course.price);
         setCreater_name(course.createdBy.name);
         setCreater_title(course.createdBy.title);
@@ -66,7 +75,29 @@ export default function EditCourseModal(props) {
       }
     };
     fetchData();
-  }, [id, props.show]);
+  }, [id, props.show, token, error]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch1({ type: "FETCH_CATEGORY_REQUEST" });
+      try {
+        const res = await axiosInstance.get(`/api/admin/all-categories`, {
+          headers: { Authorization: token },
+        });
+
+        dispatch1({ type: "FETCH_CATEGORY_SUCCESS", payload: res.data });
+      } catch (error) {
+        dispatch1({
+          type: "FETCH_CATEGORY_FAIL",
+          payload: getError(error),
+        });
+        toast.error(getError(error), {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    };
+    fetchData();
+  }, [token]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -79,6 +110,7 @@ export default function EditCourseModal(props) {
           title,
           description,
           category,
+          class_type,
           price,
           creater_name,
           creater_title,
@@ -89,7 +121,7 @@ export default function EditCourseModal(props) {
       );
 
       if (data.message) {
-        toast.success("Course Updated Succesfully.  Redirecting...", {
+        toast.success("Course Updated Succesfully. Redirecting...", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         resetForm();
@@ -113,6 +145,19 @@ export default function EditCourseModal(props) {
     }
   };
 
+  const classes = [
+    "LKG",
+    "UKG",
+    "1st",
+    "2nd",
+    "3rd",
+    "4th",
+    "5th",
+    "6th",
+    "7th",
+    "8th",
+  ];
+
   return (
     <Modal
       {...props}
@@ -128,7 +173,7 @@ export default function EditCourseModal(props) {
       <Form onSubmit={submitHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 value={title}
@@ -137,7 +182,7 @@ export default function EditCourseModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="firstname">
+            <Form.Group className="mb-3" controlId="description">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
@@ -148,16 +193,49 @@ export default function EditCourseModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="lastname">
+            <Form.Group className="mb-3" controlId="category">
               <Form.Label>Category</Form.Label>
-              <Form.Control
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              />
+              <InputGroup>
+                <Form.Select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  aria-label="Default select example"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  {categories &&
+                    categories.map((category) => (
+                      <option key={category._id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
+                  {categories?.length === 0 && (
+                    <option value="">No Category Found</option>
+                  )}
+                </Form.Select>
+              </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="lastname">
+            <Form.Group className="mb-3" controlId="class">
+              <Form.Label>Class</Form.Label>
+              <InputGroup>
+                <Form.Select
+                  value={class_type}
+                  onChange={(e) => setClass_type(e.target.value)}
+                  aria-label="Default select example"
+                  required
+                >
+                  <option value="">Select Class</option>
+                  {classes.map((class_type) => (
+                    <option key={class_type} value={class_type}>
+                      {class_type}
+                    </option>
+                  ))}
+                </Form.Select>
+              </InputGroup>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="price">
               <Form.Label>Price</Form.Label>
               <Form.Control
                 value={price}
@@ -175,7 +253,7 @@ export default function EditCourseModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="fax">
+            <Form.Group className="mb-3" controlId="creator_title">
               <Form.Label>Creator Title</Form.Label>
               <Form.Control
                 value={creater_title}

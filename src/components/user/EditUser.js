@@ -63,7 +63,7 @@ export default function EditUserModel(props) {
       }
     };
     fetchData();
-  }, [id, props.show]);
+  }, [id, props.show, token, error]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
