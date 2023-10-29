@@ -18,9 +18,10 @@ import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import CustomSkeleton from "../layout/CustomSkeleton";
 import LoadingBox from "../layout/LoadingBox";
-import { getTransactionReducer } from "../../reducers/transaction";
+import { getTestimonialReducer } from "../../reducers/testimonial";
+import AddTestimonialModal from "./AddTestimonialModal";
 
-export default function Transaction() {
+export default function Testimonial() {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { token } = state;
@@ -30,34 +31,34 @@ export default function Transaction() {
   const [searchInput, setSearchInput] = useState("");
   const [query, setQuery] = useState("");
   const [del, setDel] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   const curPageHandler = (p) => setCurPage(p);
 
   const [
-    { deleteLoading, loading, error, transactions, filteredTransactionsCount },
+    { deleteLoading, loading, error, testimonials, filteredTestimonialsCount },
     dispatch,
-  ] = useReducer(getTransactionReducer, {
+  ] = useReducer(getTestimonialReducer, {
     loading: true,
     error: "",
   });
 
-  const deleteTransaction = async (id) => {
+  const deleteTestimonial = async (id) => {
     if (
-      window.confirm(
-        "Are you sure you want to delete this Transaction?\n\nNote: All Related details like TransactionId and all other things will also be deleted Permanently."
-      ) === true
+      window.confirm("Are you sure you want to delete this Testimonial?") ===
+      true
     ) {
       try {
         setDel(true);
         const res = await axiosInstance.delete(
-          `/api/admin/delete-transaction/${id}`,
+          `/api/admin/delete-testimonial/${id}`,
           {
             headers: { Authorization: token },
           }
         );
         setDel(false);
         if (res.data) {
-          toast.success("Transaction Deleted Succesfully", {
+          toast.success("Testimonial Deleted Succesfully", {
             position: toast.POSITION.TOP_CENTER,
           });
         }
@@ -74,7 +75,7 @@ export default function Transaction() {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const res = await axiosInstance.get(
-          `/api/admin/get-all-transaction/?keyword=${query}&resultPerPage=${resultPerPage}&currentPage=${curPage}`,
+          `/api/admin/get-testimonials/?keyword=${query}&resultPerPage=${resultPerPage}&currentPage=${curPage}`,
           {
             headers: { Authorization: token },
           }
@@ -86,14 +87,14 @@ export default function Transaction() {
           payload: getError(error),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     };
     fetchData();
   }, [token, del, curPage, resultPerPage, query]);
 
-  const numOfPages = Math.ceil(filteredTransactionsCount / resultPerPage);
+  const numOfPages = Math.ceil(filteredTestimonialsCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
 
   const getDateTime = (dt) => {
@@ -115,6 +116,9 @@ export default function Transaction() {
           <>
             <Card>
               <Card.Header>
+                <Button onClick={() => setModalShow(true)}>
+                  Add Testimonial
+                </Button>
                 <div className="search-box float-end">
                   <InputGroup>
                     <Form.Control
@@ -141,11 +145,11 @@ export default function Transaction() {
                   <thead>
                     <tr>
                       <th>S.No</th>
-                      <th>TransactionId</th>
-                      <th>Amount</th>
-                      <th>status</th>
-                      <th>Created By</th>
-                      <th>Created At</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Given By</th>
+                      <th>Image</th>
+                      <th>Given At</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -155,27 +159,33 @@ export default function Transaction() {
                         resultPerPage={resultPerPage}
                         column={7}
                       />
-                    ) : transactions && transactions.length > 0 ? (
-                      transactions.map((transaction, i) => (
-                        <tr key={transaction?._id} className="odd">
+                    ) : testimonials && testimonials.length > 0 ? (
+                      testimonials.map((testimonial, i) => (
+                        <tr key={testimonial?._id} className="odd">
                           <td className="text-center">{skip + i + 1}</td>
-                          <td>{transaction?.transactionId}</td>
-                          <td>${transaction?.amount}</td>
-                          <td>{transaction?.status}</td>
+                          <td>{testimonial?.title.slice(0, 20)}</td>
                           <td>
-                            {transaction?.user.firstname}{" "}
-                            {transaction?.user.lastname}
+                            {testimonial?.description.slice(0, 25) + "..."}
+                          </td>
+                          <td>{testimonial?.user.name}</td>
+                          <td>
+                            <img
+                              src={testimonial?.user.image}
+                              alt={testimonial?.user.name}
+                              width="70"
+                              height="50"
+                            />
                           </td>
                           <td>
                             {getDateTime(
-                              transaction?.createdAt && transaction?.createdAt
+                              testimonial?.createdAt && testimonial?.createdAt
                             )}
                           </td>
                           <td>
                             <Button
                               onClick={() => {
                                 navigate(
-                                  `/admin/view/transaction/${transaction._id}`
+                                  `/admin/view/testimonial/${testimonial._id}`
                                 );
                               }}
                               type="success"
@@ -186,7 +196,7 @@ export default function Transaction() {
                             <Button
                               disabled={loading ? true : false}
                               onClick={() => {
-                                deleteTransaction(transaction._id);
+                                deleteTestimonial(testimonial._id);
                               }}
                               type="danger"
                               className="btn btn-danger ms-2"
@@ -203,7 +213,7 @@ export default function Transaction() {
                     ) : (
                       <tr>
                         <td colSpan={7} className="text-center">
-                          No Transaction(s) Found
+                          No Testimonial(s) Found
                         </td>
                       </tr>
                     )}
@@ -228,7 +238,7 @@ export default function Transaction() {
                     </Form.Select>
                   </Form.Group>
                 </div>
-                {resultPerPage < filteredTransactionsCount && (
+                {resultPerPage < filteredTestimonialsCount && (
                   <CustomPagination
                     pages={numOfPages}
                     pageHandler={curPageHandler}
@@ -239,6 +249,10 @@ export default function Transaction() {
             </Card>
           </>
         )}
+        <AddTestimonialModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
         <ToastContainer />
       </Container>
     </motion.div>

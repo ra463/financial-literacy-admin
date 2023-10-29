@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useContext, useState } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
 import { editReducer as reducer } from "../../reducers/commonReducer";
-// import { uploadImage } from "../../utils/uploadImage";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Modal, Form, Button, Container, InputGroup } from "react-bootstrap";

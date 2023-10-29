@@ -83,7 +83,7 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
         }, 3000);
       } else {
         toast.error(data.error.message, {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     } catch (err) {
@@ -92,7 +92,7 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
         payload: getError(err),
       });
       toast.error(getError(error), {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };

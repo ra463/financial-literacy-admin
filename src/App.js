@@ -24,6 +24,8 @@ import Workshop from "./components/workshops/Workshop";
 import Viewworkshop from "./components/workshops/Viewworkshop";
 import Transaction from "./components/transaction/Transaction";
 import ViewTransaction from "./components/transaction/ViewTransaction";
+import Testimonial from "./components/testimonial/Testimonial";
+import ViewTestimonial from "./components/testimonial/ViewTestimonial";
 
 function App() {
   const { state } = useContext(Store);
@@ -40,11 +42,13 @@ function App() {
     { path: "/admin/courses", element: <Courses /> },
     { path: "/admin/workshops", element: <Workshop /> },
     { path: "/admin/transactions", element: <Transaction /> },
+    { path: "/admin/testimonials", element: <Testimonial /> },
     { path: "/admin/view/course/:id", element: <ViewCourse /> },
     { path: "/admin/view/user/:id", element: <ViewUser /> },
     { path: "/admin/view/course/:id/:sectionId", element: <ViewSection /> },
     { path: "/admin/view/workshop/:id", element: <Viewworkshop /> },
     { path: "/admin/view/transaction/:id", element: <ViewTransaction /> },
+    { path: "/admin/view/testimonial/:id", element: <ViewTestimonial /> },
   ];
 
   return (

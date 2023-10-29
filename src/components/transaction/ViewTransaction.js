@@ -133,35 +133,220 @@ const ViewTransaction = () => {
                 </Row>
               </Card.Body>
             </Card>
-            {/* <Card>
+            <Card>
               <Card.Header>
                 <Card.Title>
                   {loading ? (
                     <Skeleton />
                   ) : (
-                    `${user?.firstname} ${user?.lastname}`
-                  )}{" "}
-                  Profile picture
+                    `Order Details for Transaction ID: ${transaction?.transactionId}`
+                  )}
                 </Card.Title>
               </Card.Header>
               <Card.Body>
-                {loading ? (
-                  <Skeleton />
-                ) : (
-                  <img
-                    src={user?.avatar.url}
-                    alt="profile_pic"
-                    style={{
-                      width: "250px",
-                      height: "200px",
-                      border: "1px solid slategray",
-                      borderRadius: "5px",
-                      objectFit: "contain",
-                    }}
-                  />
-                )}
+                <Row>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Order ID</strong>
+                      <span style={{ fontSize: "12px", color: "red" }}>
+                        (paypalOrderId)
+                      </span>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        transaction?.order?.paypalOrderId
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Purchased Course(s)</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        `1 x ${transaction?.order?.course?._id}`
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Purchased Course Title</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        transaction?.order?.course?.title
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Order Status</strong>
+                    </p>
+                    <p>{loading ? <Skeleton /> : transaction?.order?.status}</p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Order Price</strong>
+                    </p>
+                    <p>{loading ? <Skeleton /> : transaction?.order?.price}</p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Order Created At</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        getDateTime(transaction?.order?.createdAt)
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Order Last Update</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        getDateTime(transaction?.order?.updatedAt)
+                      )}
+                    </p>
+                  </Col>
+                </Row>
               </Card.Body>
-            </Card> */}
+            </Card>
+            <Card>
+              <Card.Header>
+                <Card.Title>
+                  {loading ? (
+                    <Skeleton />
+                  ) : (
+                    `Purchased Course for Transaction ID: ${transaction?.transactionId}`
+                  )}
+                </Card.Title>
+              </Card.Header>
+              <Card.Body>
+                <Row>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course ID</strong>
+                    </p>
+                    <p>{loading ? <Skeleton /> : transaction?.course?._id}</p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Title</strong>
+                    </p>
+                    <p>{loading ? <Skeleton /> : transaction?.course?.title}</p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Category</strong>
+                    </p>
+                    <p>
+                      {loading ? <Skeleton /> : transaction?.course?.category}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Price</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        transaction?.course?.price?.toFixed(2)
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Duration</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        `${transaction?.course?.course_length}`
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Class</strong>
+                    </p>
+                    <p>
+                      {loading ? <Skeleton /> : transaction?.course?.class_type}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Created At</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        getDateTime(transaction?.course?.createdAt)
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
+                      <strong>Course Last Update</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        getDateTime(transaction?.course?.updatedAt)
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={12}>
+                    <p className="mb-0">
+                      <strong>Course Description</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        transaction?.course?.description
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={12}>
+                    <p className="mb-0">
+                      <strong>Course Preview</strong>
+                    </p>
+                    {loading ? (
+                      <Skeleton />
+                    ) : transaction?.course?.poster &&
+                      transaction?.course?.poster.length > 0 ? (
+                      transaction?.course?.poster.map((poster, index) => (
+                        <img
+                          key={index}
+                          src={poster}
+                          alt={transaction?.course?.title}
+                          className="edit-image"
+                        />
+                      ))
+                    ) : (
+                      <p>No Preview Available</p>
+                    )}
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+
             <ToastContainer />
           </>
         )}
