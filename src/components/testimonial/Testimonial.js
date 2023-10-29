@@ -171,7 +171,7 @@ export default function Testimonial() {
                           <td>
                             <img
                               src={testimonial?.user.image}
-                              alt={testimonial?.user.name}
+                              alt="testimonial"
                               width="70"
                               height="50"
                             />

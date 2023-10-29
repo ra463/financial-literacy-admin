@@ -272,6 +272,36 @@ const Viewworkshop = () => {
                       )}
                     </p>
                   </Col>
+                  <Col md={15}>
+                    <p className="mb-0">
+                      <strong>
+                        I have some general questions about Financial
+                        Educational workshops.
+                      </strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        workshop?.about_workshop?.have_questions
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={15}>
+                    <p className="mb-0">
+                      <strong>
+                        I believe my school is eligible for funding from
+                        _______.
+                      </strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        workshop?.about_workshop?.school_eligible
+                      )}
+                    </p>
+                  </Col>
                 </Row>
               </Card.Body>
             </Card>
