@@ -41,19 +41,19 @@ export default function CreateSectionModel(props) {
       );
 
       if (data) {
-        resetForm();
+        dispatch({ type: "CREATE_SUCCESS" });
         toast.success("Section Created Succesfully", {
           position: toast.POSITION.TOP_CENTER,
         });
+        resetForm();
         setTimeout(() => {
-          dispatch({ type: "CREATE_SUCCESS" });
           window.location.reload();
         }, 3000);
       }
     } catch (error) {
       dispatch({ type: "CREATE_FAIL" });
       toast.error(getError(error), {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };
@@ -73,7 +73,7 @@ export default function CreateSectionModel(props) {
       <Form onSubmit={createSectionHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 value={title}

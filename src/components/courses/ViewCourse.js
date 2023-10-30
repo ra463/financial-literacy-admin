@@ -226,7 +226,7 @@ const ViewCourse = () => {
                   <Skeleton />
                 ) : (
                   <div className="edit-image">
-                    {course?.poster.length === 0 && <p>No Image Found</p>}
+                    {course?.poster.length === 0 && <b>No Image Found</b>}
                     {course?.poster &&
                       course?.poster.length > 0 &&
                       course?.poster.map((posterUrl, i) => (

@@ -75,7 +75,7 @@ export default function AddCategory(props) {
       <Form onSubmit={addCategoryHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="firstname">
+            <Form.Group className="mb-3" controlId="category">
               <Form.Label>Category</Form.Label>
               <Form.Control
                 value={name}

@@ -108,7 +108,7 @@ export default function EditLessonsModal({
       <Form onSubmit={submitHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 value={title}

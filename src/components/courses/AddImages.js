@@ -78,7 +78,7 @@ export default function AddImageModal(props) {
 
       if (data) {
         toast.success("Images uploaded successfully", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         setTimeout(() => {
           navigate(`/admin/courses`);
@@ -115,7 +115,7 @@ export default function AddImageModal(props) {
       <Form onSubmit={imageSubmitHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="fax">
+            <Form.Group className="mb-3" controlId="image">
               <Form.Label>Add More Image</Form.Label>
               <Form.Control
                 type="file"

@@ -88,23 +88,24 @@ export default function EditUserModel(props) {
       );
 
       if (data.user) {
-        toast.success("User Updated Succesfully.  Redirecting...", {
-          position: toast.POSITION.BOTTOM_CENTER,
+        dispatch({ type: "UPDATE_SUCCESS" });
+        toast.success("User Updated Succesfully.", {
+          position: toast.POSITION.TOP_CENTER,
         });
         resetForm();
+        props.onHide();
         setTimeout(() => {
-          navigate("/admin/users");
-          dispatch({ type: "UPDATE_SUCCESS" });
+          window.location.reload();
         }, 3000);
       } else {
         toast.error(data.error.message, {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL" });
       toast.error(getError(err), {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };
@@ -149,7 +150,7 @@ export default function EditUserModel(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="fax">
+            <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 value={email}

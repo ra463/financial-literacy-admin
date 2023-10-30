@@ -67,20 +67,24 @@ export default function CreateCourseModel(props) {
       );
 
       if (data) {
+        dispatch({ type: "CREATE_SUCCESS" });
         toast.success("Course Created Succesfully.", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         resetForm();
-        dispatch({ type: "CREATE_SUCCESS" });
+        setTimeout(() => {
+          props.onHide();
+          window.location.reload();
+        }, 3000);
       } else {
         toast.error(data.error.message, {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     } catch (err) {
       dispatch({ type: "CREATE_FAIL" });
       toast.error(getError(err), {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };
@@ -100,7 +104,7 @@ export default function CreateCourseModel(props) {
           payload: getError(error),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     };
@@ -142,7 +146,7 @@ export default function CreateCourseModel(props) {
           <Form onSubmit={createCourseHandler}>
             <Modal.Body>
               <Container className="small-container">
-                <Form.Group className="mb-3" controlId="name">
+                <Form.Group className="mb-3" controlId="title">
                   <Form.Label>Title</Form.Label>
                   <Form.Control
                     value={title}
@@ -151,7 +155,7 @@ export default function CreateCourseModel(props) {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="firstname">
+                <Form.Group className="mb-3" controlId="description">
                   <Form.Label>Description</Form.Label>
                   <Form.Control
                     value={description}
@@ -160,7 +164,7 @@ export default function CreateCourseModel(props) {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="lastname">
+                <Form.Group className="mb-3" controlId="category">
                   <Form.Label>Category</Form.Label>
                   <InputGroup>
                     <Form.Select
@@ -184,7 +188,7 @@ export default function CreateCourseModel(props) {
                   </InputGroup>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="lastname">
+                <Form.Group className="mb-3" controlId="class">
                   <Form.Label>Class</Form.Label>
                   <InputGroup>
                     <Form.Select
@@ -203,7 +207,7 @@ export default function CreateCourseModel(props) {
                   </InputGroup>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="mobile_no">
+                <Form.Group className="mb-3" controlId="price">
                   <Form.Label>Price</Form.Label>
                   <Form.Control
                     type="number"
@@ -213,7 +217,7 @@ export default function CreateCourseModel(props) {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="fax">
+                <Form.Group className="mb-3" controlId="cre_name">
                   <Form.Label>Creator Name</Form.Label>
                   <Form.Control
                     value={creater_name}
@@ -222,7 +226,7 @@ export default function CreateCourseModel(props) {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="fax">
+                <Form.Group className="mb-3" controlId="cre_title">
                   <Form.Label>Creator Title</Form.Label>
                   <Form.Control
                     value={creater_title}

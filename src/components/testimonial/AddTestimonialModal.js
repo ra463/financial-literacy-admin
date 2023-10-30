@@ -105,13 +105,13 @@ export default function AddTestimonialModal(props) {
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create Course
+          Add Testimonial
         </Modal.Title>
       </Modal.Header>
       <Form onSubmit={addTestimonialHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3" controlId="title">
               <Form.Label>
                 <b>Title</b>
               </Form.Label>
@@ -122,7 +122,7 @@ export default function AddTestimonialModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="firstname">
+            <Form.Group className="mb-3" controlId="description">
               <Form.Label>
                 <b>Description</b>
               </Form.Label>
@@ -135,7 +135,7 @@ export default function AddTestimonialModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="mobile_no">
+            <Form.Group className="mb-3" controlId="given_by">
               <Form.Label>
                 <b>Given By</b>
               </Form.Label>
@@ -146,9 +146,9 @@ export default function AddTestimonialModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="mobile_no">
+            <Form.Group className="mb-3" controlId="image">
               <Form.Label>
-                <b>User - Profile Picture</b>
+                <b>User - Image</b>
                 <span style={{ fontSize: "12px", color: "red" }}>
                   {" "}
                   (Optional)

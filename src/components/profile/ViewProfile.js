@@ -93,12 +93,6 @@ const ViewProfile = () => {
                   </p>
                   <p>{user.mobile_no}</p>
                 </Col>
-                {/* <Col md={4}>
-                  <p className="mb-0">
-                    <strong>Fax</strong>
-                  </p>
-                  <p>{user.fax}</p>
-                </Col> */}
                 <Col md={4}>
                   <p className="mb-0">
                     <strong>Role</strong>

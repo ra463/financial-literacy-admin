@@ -39,8 +39,8 @@ export default function EditTestimonialModal(props) {
         position: toast.POSITION.TOP_CENTER,
       });
       return;
-    } else if (file.size > 1024 * 1024 * 5) {
-      toast.error("Image size too large! only 5mb allowed.", {
+    } else if (file.size > 1024 * 1024 * 2) {
+      toast.error("Image size too large! only 2mb allowed.", {
         position: toast.POSITION.TOP_CENTER,
       });
       return;
@@ -107,13 +107,14 @@ export default function EditTestimonialModal(props) {
       );
 
       if (data.message) {
-        toast.success("Testimonial Updated Succesfully. Redirecting...", {
+        dispatch({ type: "UPDATE_SUCCESS" });
+        toast.success("Testimonial Updated Succesfully.", {
           position: toast.POSITION.TOP_CENTER,
         });
         resetForm();
+        props.onHide();
         setTimeout(() => {
-          navigate(`/admin/testimonials`);
-          dispatch({ type: "UPDATE_SUCCESS" });
+          window.location.reload();
         }, 3000);
       } else {
         toast.error(data.error.message, {
@@ -170,7 +171,7 @@ export default function EditTestimonialModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="price">
+            <Form.Group className="mb-3" controlId="given_by">
               <Form.Label>
                 <b>Given By</b>
               </Form.Label>
@@ -181,7 +182,7 @@ export default function EditTestimonialModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="mobile_no">
+            <Form.Group className="mb-3" controlId="user_pic">
               <Form.Label>
                 <b>User - Profile Picture</b>
               </Form.Label>

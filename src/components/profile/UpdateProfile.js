@@ -118,11 +118,6 @@ export default function UpdateProfileModel(props) {
             className="small-container"
             style={{ backgroundColor: "#f4f6f9" }}
           >
-            {/* <img
-            src={preview}
-            alt={"profile_img"}
-            style={{ width: "200px", height: "200px" }}
-          /> */}
             <Form.Group className="mb-3" controlId="firstname">
               <Form.Label>Firstname</Form.Label>
               <Form.Control
@@ -139,14 +134,6 @@ export default function UpdateProfileModel(props) {
                 required
               />
             </Form.Group>
-            {/* <Form.Group className="mb-3" controlId="fax">
-              <Form.Label>Fax</Form.Label>
-              <Form.Control
-                value={fax}
-                onChange={(e) => setFax(e.target.value)}
-                required
-              />
-            </Form.Group> */}
             <Form.Group className="mb-3" controlId="mobile_no">
               <Form.Label>Mobile No.</Form.Label>
               <Form.Control
