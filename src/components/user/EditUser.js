@@ -3,17 +3,16 @@ import { Store } from "../../Store";
 import { getError } from "../../utils/error";
 import { editReducer as reducer } from "../../reducers/commonReducer";
 // import { uploadImage } from "../../utils/uploadImage";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Modal, Form, Button, Container } from "react-bootstrap";
 import LoadingBox from "../layout/LoadingBox";
 import axiosInstance from "../../utils/axiosUtil";
 
 export default function EditUserModel(props) {
-  const navigate = useNavigate();
   const { state } = useContext(Store);
   const { token } = state;
-  const { id } = useParams(); // user/:id
+  const { id } = useParams();
 
   const [{ error, loadingUpdate }, dispatch] = useReducer(reducer, {
     loading: true,

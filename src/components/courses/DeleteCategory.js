@@ -73,7 +73,7 @@ export default function DeleteCategory(props) {
       }
     };
     fetchData();
-  }, [categories]);
+  }, [categories, token]);
 
   return (
     <Modal

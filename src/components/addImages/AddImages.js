@@ -1,13 +1,13 @@
 import React, { useReducer, useContext, useState } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
-import { addTestimonialReducer as reducer } from "../../reducers/testimonial";
+import { addImagesReducer as reducer } from "../../reducers/images";
 import { toast, ToastContainer } from "react-toastify";
 import { Modal, Form, Button, Container } from "react-bootstrap";
 import LoadingBox from "../layout/LoadingBox";
 import axiosInstance from "../../utils/axiosUtil";
 
-export default function AddTestimonialModal(props) {
+export default function AddImages(props) {
   const { state } = useContext(Store);
   const { token } = state;
 
@@ -17,15 +17,11 @@ export default function AddTestimonialModal(props) {
   });
 
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
 
   const resetForm = () => {
     setTitle("");
-    setDescription("");
-    setName("");
     setImage("");
     setImagePreview("");
   };
@@ -52,19 +48,17 @@ export default function AddTestimonialModal(props) {
     };
   };
 
-  const addTestimonialHandler = async (e) => {
+  const addImageHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("description", description);
-    formData.append("name", name);
     if (image) formData.append("image", image);
 
     try {
       dispatch({ type: "ADD_REQUEST" });
 
       const { data } = await axiosInstance.post(
-        `/api/admin/add-testimonial`,
+        `/api/admin/add-image`,
         formData,
         {
           headers: {
@@ -75,7 +69,7 @@ export default function AddTestimonialModal(props) {
 
       if (data) {
         dispatch({ type: "ADD_SUCCESS" });
-        toast.success("Testimonial Added Succesfully.", {
+        toast.success("Image Added Succesfully.", {
           position: toast.POSITION.TOP_CENTER,
         });
         resetForm();
@@ -104,11 +98,9 @@ export default function AddTestimonialModal(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add Testimonial
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Add Image</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={addTestimonialHandler}>
+      <Form onSubmit={addImageHandler}>
         <Modal.Body>
           <Container className="small-container">
             <Form.Group className="mb-3" controlId="title">
@@ -122,42 +114,15 @@ export default function AddTestimonialModal(props) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="description">
-              <Form.Label>
-                <b>Description</b>
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="given_by">
-              <Form.Label>
-                <b>Given By</b>
-              </Form.Label>
-              <Form.Control
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </Form.Group>
-
             <Form.Group className="mb-3" controlId="image">
               <Form.Label>
-                <b>User - Image</b>
-                <span style={{ fontSize: "12px", color: "red" }}>
-                  {" "}
-                  (Optional)
-                </span>
+                <b>Image</b>
               </Form.Label>
               <Form.Control
                 type="file"
                 onChange={handleImageChange}
                 accept="image/*"
+                required
               />
             </Form.Group>
             {

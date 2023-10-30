@@ -9,6 +9,7 @@ import { HiUsers } from "react-icons/hi";
 import { BiSolidBook } from "react-icons/bi";
 import { FaSignOutAlt } from "react-icons/fa";
 import { GrTransaction, GrWorkshop } from "react-icons/gr";
+import { BsImages } from "react-icons/bs";
 
 const linkList = [
   {
@@ -33,10 +34,15 @@ const linkList = [
     url: "/admin/testimonials",
   },
   {
-    icon:<GrTransaction className="icon-md" />,
+    icon: <GrTransaction className="icon-md" />,
     text: "Transactions",
     url: "/admin/transactions",
-  }
+  },
+  {
+    icon: <BsImages className="icon-md" />,
+    text: "Images",
+    url: "/admin/images",
+  },
 ];
 
 const active_text = {
@@ -46,6 +52,7 @@ const active_text = {
   Workshops: "workshop",
   Testimonials: "testimonial",
   Transactions: "transaction",
+  Images: "image",
 };
 
 export default function SideNavbar({ isExpanded }) {
