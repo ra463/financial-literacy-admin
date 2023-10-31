@@ -184,6 +184,7 @@ const Viewworkshop = () => {
               </Card.Header>
               <Card.Body>
                 <Row>
+                  s
                   <Col md={15}>
                     <p className="mb-0">
                       <strong>
@@ -279,7 +280,15 @@ const Viewworkshop = () => {
                         Educational workshops.
                       </strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : workshop?.have_questions}</p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : workshop?.have_questions === 0 ? (
+                        "No"
+                      ) : (
+                        "Yes"
+                      )}
+                    </p>
                   </Col>
                   <Col md={15}>
                     <p className="mb-0">
@@ -288,7 +297,15 @@ const Viewworkshop = () => {
                         _______.
                       </strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : workshop?.school_eligible}</p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : workshop?.school_eligible === 0 ? (
+                        "No"
+                      ) : (
+                        "Yes"
+                      )}
+                    </p>
                   </Col>
                 </Row>
               </Card.Body>
