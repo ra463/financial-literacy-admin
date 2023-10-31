@@ -155,6 +155,10 @@ export default function EditCourseModal(props) {
     "6th",
     "7th",
     "8th",
+    "9th",
+    "10th",
+    "11th",
+    "12th",
   ];
 
   return (
