@@ -184,7 +184,6 @@ const Viewworkshop = () => {
               </Card.Header>
               <Card.Body>
                 <Row>
-                  s
                   <Col md={15}>
                     <p className="mb-0">
                       <strong>
