@@ -22,7 +22,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import AddLessonsModal from "./AddLessons";
 import EditLessonsModal from "./EditLesson";
-import LoadingBox from "../layout/LoadingBox";
+import DeleteModal from "./DeleteModal";
 
 const ViewSection = () => {
   const { state } = useContext(Store);
@@ -31,6 +31,7 @@ const ViewSection = () => {
 
   const [lessonModalShow, setLessonModalShow] = useState(false);
   const [editLessonModalShow, setEditLessonModalShow] = useState(false);
+  const [deleteBox, setDeleteBox] = useState(false);
   const [lessonId, setLessonId] = useState("");
 
   const [{ loading, error, course }, dispatch] = useReducer(reducer, {
@@ -165,13 +166,9 @@ const ViewSection = () => {
                             <Button
                               type="danger"
                               className="btn btn-danger"
-                              onClick={() => deleteLecture(les._id)}
+                              onClick={() => setDeleteBox(true)}
                             >
-                              {deleteLoading ? (
-                                <LoadingBox className="m-auto" />
-                              ) : (
-                                <FaTrashAlt className="m-auto" />
-                              )}
+                              <FaTrashAlt className="m-auto" />
                             </Button>
                             <Button
                               type="success"
@@ -181,6 +178,14 @@ const ViewSection = () => {
                               <FaEdit className="m-auto" />
                             </Button>
                           </td>
+                          {deleteBox && (
+                            <DeleteModal
+                              show={deleteBox}
+                              onHide={() => setDeleteBox(false)}
+                              deleteHandler={() => deleteLecture(les._id)}
+                              deleteLoading={deleteLoading}
+                            />
+                          )}
                         </tr>
                       ))
                     ) : (

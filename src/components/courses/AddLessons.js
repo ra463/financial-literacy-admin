@@ -149,17 +149,14 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
             <div
               style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 gap: "10px",
                 width: "100%",
               }}
             >
               <progress style={{ width: "100%" }} max="100" value={progress} />
-              <span
-                style={{width:"20%", fontSize: "11px", fontWeight: "bold", color: "green" }}
-              >
-                {progress}% Completed
-              </span>
+              <Button style={{width:"100%"}} variant="success">{progress}% Completed</Button>
             </div>
           ) : (
             <>
