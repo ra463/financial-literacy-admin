@@ -156,7 +156,9 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
               }}
             >
               <progress style={{ width: "100%" }} max="100" value={progress} />
-              <Button style={{width:"100%"}} variant="success">{progress}% Completed</Button>
+              <Button style={{ width: "100%" }} variant="success">
+                {progress > 99 ? "Processing..." : `Uploading ${progress}%`}
+              </Button>
             </div>
           ) : (
             <>
