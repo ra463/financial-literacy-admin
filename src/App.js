@@ -27,6 +27,7 @@ import ViewTransaction from "./components/transaction/ViewTransaction";
 import Testimonial from "./components/testimonial/Testimonial";
 import ViewTestimonial from "./components/testimonial/ViewTestimonial";
 import Images from "./components/addImages/Images";
+import Dashboard from "./components/layout/Dashboard";
 
 function App() {
   const { state } = useContext(Store);
@@ -39,6 +40,7 @@ function App() {
 
   const routeList = [
     { path: "/view-profile", element: <ViewProfile /> },
+    { path: "/admin/dashboard", element: <Dashboard /> },
     { path: "/admin/users", element: <Users /> },
     { path: "/admin/courses", element: <Courses /> },
     { path: "/admin/workshops", element: <Workshop /> },

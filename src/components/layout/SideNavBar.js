@@ -57,7 +57,7 @@ const active_text = {
 
 export default function SideNavbar({ isExpanded }) {
   const pathname = window.location.pathname;
-  const [activeLink, setActiveLink] = useState("Users");
+  const [activeLink, setActiveLink] = useState("Dashboard");
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const navigate = useNavigate();
@@ -95,9 +95,9 @@ export default function SideNavbar({ isExpanded }) {
             <div className="user-panel mt-3 pb-3 mb-3 d-flex">
               <div className="info">
                 <Link to="/view-profile" className="d-block">
-                  {userInfo.avatar.url && (
+                  {userInfo.avatar?.url && (
                     <img
-                      src={userInfo.avatar.url}
+                      src={userInfo.avatar?.url}
                       alt=""
                       style={{
                         width: "40px",
