@@ -4,7 +4,6 @@ import { getError } from "../../utils/error";
 import { addLessonsReducer } from "../../reducers/course";
 import { toast, ToastContainer } from "react-toastify";
 import { Modal, Form, Button, Container } from "react-bootstrap";
-import LoadingBox from "../layout/LoadingBox";
 import axiosInstance from "../../utils/axiosUtil";
 
 export default function AddLessonsModal({ id, sectionId, ...props }) {
@@ -19,6 +18,7 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
   const [title, setTitle] = useState("");
   const [video, setVideo] = useState("");
   const [videoPreview, setVideoPreview] = useState("");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (!props.show) {
@@ -68,10 +68,15 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
             "Content-Type": "multipart/form-data",
             Authorization: token,
           },
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            let percent = Math.floor((loaded * 100) / total);
+            setProgress(percent);
+          },
         }
       );
 
-      if (data.message) {
+      if (data) {
         dispatch({ type: "ADD_SUCCESS" });
         props.onHide();
         toast.success("Lesson Added Succesfully", {
@@ -140,17 +145,36 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={props.onHide}>
-            Close
-          </Button>
-          <Button
-            variant="success"
-            type="submit"
-            disabled={loading ? true : false}
-          >
-            Submit
-          </Button>
-          {loading && <LoadingBox></LoadingBox>}
+          {progress > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                width: "100%",
+              }}
+            >
+              <progress style={{ width: "100%" }} max="100" value={progress} />
+              <span
+                style={{width:"20%", fontSize: "11px", fontWeight: "bold", color: "green" }}
+              >
+                {progress}% Completed
+              </span>
+            </div>
+          ) : (
+            <>
+              <Button variant="danger" onClick={props.onHide}>
+                Close
+              </Button>
+              <Button
+                variant="success"
+                type="submit"
+                disabled={loading ? true : false}
+              >
+                Submit
+              </Button>
+            </>
+          )}
         </Modal.Footer>
       </Form>
     </Modal>

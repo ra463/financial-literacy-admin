@@ -61,7 +61,6 @@ function App() {
         <div className="sidebar-overlay" onClick={sidebarHandler}></div>
       )}
       <div className="sidebar-wrapper">
-        {/* <Menu/> */}
         {userInfo?.role === "admin" && <SideNavbar isExpanded={isExpanded} />}
       </div>
       <div
