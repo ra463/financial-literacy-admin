@@ -28,7 +28,8 @@ export default function EditCourseModal(props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [class_type, setClass_type] = useState("");
+  const [class_type, setClass_type] = useState([]);
+  const [selectedClasses, setSelectedClasses] = useState("");
   const [price, setPrice] = useState("");
   const [creater_name, setCreater_name] = useState("");
   const [creater_title, setCreater_title] = useState("");
@@ -161,6 +162,29 @@ export default function EditCourseModal(props) {
     "12th",
   ];
 
+  const handleClassChange = (e) => {
+    const selectedClass = e.target.value;
+
+    const classIndex = class_type.indexOf(selectedClass);
+
+    if (classIndex !== -1) {
+      const updatedClasses = [...class_type];
+      updatedClasses[classIndex] = selectedClass;
+
+      setClass_type(updatedClasses);
+    } else {
+      setClass_type([...class_type, selectedClass]);
+    }
+    setSelectedClasses("");
+  };
+
+  const handleRemoveClass = (selectedClass) => {
+    const updatedClasses = class_type.filter((cls) => cls !== selectedClass);
+    setClass_type(updatedClasses);
+  };
+
+  const availableClasses = classes.filter((cls) => !class_type?.includes(cls));
+
   return (
     <Modal
       {...props}
@@ -170,7 +194,7 @@ export default function EditCourseModal(props) {
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create Course
+          Edit Course
         </Modal.Title>
       </Modal.Header>
       <Form onSubmit={submitHandler}>
@@ -220,22 +244,47 @@ export default function EditCourseModal(props) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="class">
-              <Form.Label>Class</Form.Label>
+              <Form.Label>Add Class</Form.Label>
               <InputGroup>
                 <Form.Select
-                  value={class_type}
-                  onChange={(e) => setClass_type(e.target.value)}
+                  value={selectedClasses}
+                  onChange={handleClassChange}
                   aria-label="Default select example"
-                  required
                 >
-                  <option value="">Select Class</option>
-                  {classes.map((class_type) => (
-                    <option key={class_type} value={class_type}>
-                      {class_type}
+                  <option value="">Select Class(s)</option>
+                  {availableClasses.map((availableClass) => (
+                    <option key={availableClass} value={availableClass}>
+                      {availableClass}
                     </option>
                   ))}
                 </Form.Select>
               </InputGroup>
+            </Form.Group>
+
+            <Form.Group
+              style={{
+                border: "1px solid rgba(0, 0, 0, 0.175)",
+                borderRadius: "5px",
+              }}
+              className="mb-3"
+              controlId="class"
+            >
+              <div>
+                {class_type?.length > 0 ? (
+                  class_type.map((cls) => (
+                    <Button
+                      variant="outline-primary"
+                      key={cls}
+                      className="m-1"
+                      onClick={() => handleRemoveClass(cls)}
+                    >
+                      {cls} <span>&times;</span>
+                    </Button>
+                  ))
+                ) : (
+                  <b>No Class(s) are Selected</b>
+                )}
+              </div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="price">

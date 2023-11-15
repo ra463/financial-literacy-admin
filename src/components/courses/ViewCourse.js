@@ -172,6 +172,21 @@ const ViewCourse = () => {
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
+                      <strong>Classes</strong>
+                    </p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        course?.class_type.length > 0 &&
+                        course?.class_type.map((cls, i) => (
+                          <span key={i}>{cls},{" "}</span>
+                        ))
+                      )}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
                       <strong>Price</strong>
                     </p>
                     <p>${loading ? <Skeleton /> : course.price}</p>
