@@ -183,6 +183,8 @@ export default function CreateCourseModel(props) {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
+                    as="textarea"
+                    rows={5}
                   />
                 </Form.Group>
 

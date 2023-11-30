@@ -22,12 +22,14 @@ export default function EditLessonsModal({
   });
 
   const [title, setTitle] = useState("");
+  const [video_desc, setVideo_desc] = useState("");
   const [video, setVideo] = useState("");
   const [videoPreview, setVideoPreview] = useState("");
 
   useEffect(() => {
     if (!props.show) {
       setVideo("");
+      setVideo_desc("");
       setTitle("");
       setVideoPreview("");
     }
@@ -60,6 +62,7 @@ export default function EditLessonsModal({
     const formData = new FormData();
 
     formData.append("title", title);
+    formData.append("video_desc", video_desc);
     formData.append("video", video);
 
     try {
@@ -113,6 +116,16 @@ export default function EditLessonsModal({
               <Form.Control
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="title">
+              <Form.Label>Video Description</Form.Label>
+              <Form.Control
+                value={video_desc}
+                onChange={(e) => setVideo_desc(e.target.value)}
+                as="textarea"
+                rows={5}
               />
             </Form.Group>
 

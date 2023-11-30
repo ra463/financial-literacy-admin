@@ -213,7 +213,7 @@ export default function EditCourseModal(props) {
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
-                rows={3}
+                rows={5}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
