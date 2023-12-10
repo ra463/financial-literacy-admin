@@ -118,21 +118,37 @@ export default function Courses() {
         ) : (
           <>
             <Card>
-              <Card.Header>
-                <Button onClick={() => setModalShow(true)}>
-                  Create New Course
-                </Button>
-                <Button
-                  style={{ marginLeft: "1rem" }}
-                  onClick={() => setallCatShow(true)}
+              <Card.Header
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "10px",
+                    alignItems: "center",
+                  }}
                 >
-                  Categories
-                </Button>
+                  <span>
+                    Total Courses: <b>{filteredCourseCount}</b>
+                  </span>
+                  <Button onClick={() => setModalShow(true)}>
+                    Create New Course
+                  </Button>
+                  <Button onClick={() => setallCatShow(true)}>
+                    Categories
+                  </Button>
+                </div>
                 <div className="search-box float-end">
                   <InputGroup>
                     <Form.Control
                       aria-label="Search Input"
-                      placeholder="Search"
+                      placeholder="Search By Title"
                       type="search"
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}

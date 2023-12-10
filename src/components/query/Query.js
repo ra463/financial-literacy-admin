@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Store } from "../../Store";
-import { getError } from "../../utils/error";
-import { userReducer } from "../../reducers/user";
+import { getQueryReducer } from "../../reducers/query.js";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import MessageBox from "../layout/MessageBox";
@@ -19,7 +18,7 @@ import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import CustomSkeleton from "../layout/CustomSkeleton";
 
-export default function Users() {
+export default function Query() {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { token } = state;
@@ -32,33 +31,29 @@ export default function Users() {
 
   const curPageHandler = (p) => setCurPage(p);
 
-  const [{ loading, error, users, filteredUserCount }, dispatch] = useReducer(
-    userReducer,
-    {
+  const [{ loading, error, queries, filteredQueriesCount }, dispatch] =
+    useReducer(getQueryReducer, {
       loading: true,
       error: "",
-    }
-  );
+    });
 
-  const deleteUser = async (id) => {
+  const deleteQuery = async (id) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this user?\n\nNote: All Related orders, addresses, coupons, cart and reviews will also be deleted."
+        "Are you sure you want to delete this Query? This action cannot be undone."
       ) === true
     ) {
       try {
         setDel(true);
-        const res = await axiosInstance.delete(`/api/admin/user/${id}`, {
+        await axiosInstance.delete(`/api/admin/delete-query/${id}`, {
           headers: { Authorization: token },
         });
         setDel(false);
-        if (res.data) {
-          toast.success("User Deleted Succesfully", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-        }
+        toast.success("Query Deleted Successfully", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       } catch (error) {
-        toast.error(getError(error), {
+        toast.error(error.response.data.message, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
       }
@@ -70,19 +65,18 @@ export default function Users() {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const res = await axiosInstance.get(
-          `/api/admin/all_users/?keyword=${query}&resultPerPage=${resultPerPage}&currentPage=${curPage}`,
+          `/api/admin/get-all-queries/?keyword=${query}&resultPerPage=${resultPerPage}&currentPage=${curPage}`,
           {
             headers: { Authorization: token },
           }
         );
-        // // console.log(res.data);
         dispatch({ type: "FETCH_SUCCESS", payload: res.data });
       } catch (error) {
         dispatch({
           type: "FETCH_FAIL",
-          payload: getError(error),
+          payload: error.response.data.message,
         });
-        toast.error(getError(error), {
+        toast.error(error.response.data.message, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
       }
@@ -90,8 +84,13 @@ export default function Users() {
     fetchData();
   }, [token, del, curPage, resultPerPage, query]);
 
-  const numOfPages = Math.ceil(filteredUserCount / resultPerPage);
+  const numOfPages = Math.ceil(filteredQueriesCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
+
+  const getDateTime = (dt) => {
+    const dT = dt.split(".")[0].split("T");
+    return `${dT[0]} || ${dT[1]}`;
+  };
 
   return (
     <motion.div
@@ -113,7 +112,7 @@ export default function Users() {
               }}
             >
               <span>
-                Total Users: <b>{filteredUserCount}</b>
+                Total Queries: <b>{filteredQueriesCount}</b>
               </span>
               <div className="search-box float-end">
                 <InputGroup>
@@ -141,44 +140,30 @@ export default function Users() {
                 <thead>
                   <tr>
                     <th>S.No</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>Submitted By</th>
                     <th>Email</th>
                     <th>Mobile No.</th>
-                    <th>Role</th>
+                    <th>Registered On</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <CustomSkeleton resultPerPage={resultPerPage} column={7} />
-                  ) : users && users.length > 0 ? (
-                    users.map((user, i) => (
-                      <tr key={user?._id} className="odd">
+                    <CustomSkeleton resultPerPage={resultPerPage} column={6} />
+                  ) : queries && queries.length > 0 ? (
+                    queries.map((query, i) => (
+                      <tr key={query?._id} className="odd">
                         <td className="text-center">{skip + i + 1}</td>
-                        <td>{user?.firstname}</td>
-                        <td>{user?.lastname}</td>
-                        <td>{user?.email}</td>
-                        <td>{user?.mobile_no}</td>
+                        <td>{query?.name}</td>
+                        <td>{query?.email}</td>
+                        <td>{query?.phone}</td>
                         <td>
-                          {user?.role === "admin" ? (
-                            <span style={{ color: "red", fontWeight: "bold" }}>
-                              {user?.role.charAt(0).toUpperCase() +
-                                user?.role.slice(1)}
-                            </span>
-                          ) : (
-                            <span
-                              style={{ color: "green", fontWeight: "bold" }}
-                            >
-                              {user?.role.charAt(0).toUpperCase() +
-                                user?.role.slice(1)}
-                            </span>
-                          )}
+                          {getDateTime(query?.createdAt && query?.createdAt)}
                         </td>
                         <td>
                           <Button
                             onClick={() => {
-                              navigate(`/admin/view/user/${user._id}`);
+                              navigate(`/admin/view/query/${query._id}`);
                             }}
                             type="success"
                             className="btn btn-primary"
@@ -187,7 +172,7 @@ export default function Users() {
                           </Button>
                           <Button
                             onClick={() => {
-                              deleteUser(user._id);
+                              deleteQuery(query._id);
                             }}
                             type="danger"
                             className="btn btn-danger ms-2"
@@ -199,8 +184,8 @@ export default function Users() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={7} className="text-center">
-                        No User(s) Found
+                      <td colSpan="6" className="text-center">
+                        No Querie(s) Found
                       </td>
                     </tr>
                   )}
@@ -225,7 +210,7 @@ export default function Users() {
                   </Form.Select>
                 </Form.Group>
               </div>
-              {resultPerPage < filteredUserCount && (
+              {resultPerPage < filteredQueriesCount && (
                 <CustomPagination
                   pages={numOfPages}
                   pageHandler={curPageHandler}

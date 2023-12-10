@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import { HiUsers } from "react-icons/hi";
 import { BiSolidBook } from "react-icons/bi";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import { MdMoney } from "react-icons/md";
+import { MdMoney, MdQuestionAnswer } from "react-icons/md";
 import { GiNetworkBars } from "react-icons/gi";
 
 const reducer = (state, action) => {
@@ -177,6 +177,30 @@ export default function Dashboard() {
                   </div>
                 )}
               </Col>
+
+              <Col lg={3} sm={6}>
+                {loading ? (
+                  <Skeleton count={5} />
+                ) : (
+                  <div className="small-box bg-primary">
+                    <div className="inner">
+                      <h3>
+                        {summary.queries && summary.queries[0]
+                          ? summary.queries[0].total
+                          : 0}
+                      </h3>
+                      <p>Total Queries Submitted</p>
+                    </div>
+                    <div className="icon">
+                      <MdQuestionAnswer />
+                    </div>
+                    <Link to="/admin/queries" className="small-box-footer">
+                      More info {<FaArrowCircleRight />}
+                    </Link>
+                  </div>
+                )}
+              </Col>
+
               <Col lg={3} sm={6}>
                 {loading ? (
                   <Skeleton count={5} />
@@ -216,6 +240,7 @@ export default function Dashboard() {
                     <div className="icon">
                       <FaMoneyCheckAlt />
                     </div>
+                    <div className="small-box-footer">Total Amount</div>
                   </div>
                 )}
               </Col>

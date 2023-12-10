@@ -102,12 +102,21 @@ export default function Workshop() {
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Card>
-            <Card.Header>
+            <Card.Header
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span>
+                Total Workshops: <b>{filteredWorkshopCount}</b>
+              </span>
               <div className="search-box float-end">
                 <InputGroup>
                   <Form.Control
                     aria-label="Search Input"
-                    placeholder="Search"
+                    placeholder="Search By Name"
                     type="search"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}

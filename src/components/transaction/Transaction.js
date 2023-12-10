@@ -114,12 +114,21 @@ export default function Transaction() {
         ) : (
           <>
             <Card>
-              <Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span>
+                  Total Transactions: <b>{filteredTransactionsCount}</b>
+                </span>
                 <div className="search-box float-end">
                   <InputGroup>
                     <Form.Control
                       aria-label="Search Input"
-                      placeholder="Search"
+                      placeholder="Search By Transaction Id"
                       type="search"
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}
@@ -141,7 +150,7 @@ export default function Transaction() {
                   <thead>
                     <tr>
                       <th>S.No</th>
-                      <th>TransactionId</th>
+                      <th>Transaction Id</th>
                       <th>Amount</th>
                       <th>status</th>
                       <th>Created By</th>

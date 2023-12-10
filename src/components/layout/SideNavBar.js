@@ -7,9 +7,8 @@ import "./SideNavBar.css";
 import { MdOutlineReviews, MdOutlineSpaceDashboard } from "react-icons/md";
 import { HiUsers } from "react-icons/hi";
 import { BiSolidBook } from "react-icons/bi";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaRegStar, FaSignOutAlt } from "react-icons/fa";
 import { GrTransaction, GrWorkshop } from "react-icons/gr";
-import { BsImages } from "react-icons/bs";
 
 const linkList = [
   {
@@ -39,9 +38,9 @@ const linkList = [
     url: "/admin/transactions",
   },
   {
-    icon: <BsImages className="icon-md" />,
-    text: "Images",
-    url: "/admin/images",
+    icon: <FaRegStar className="icon-md" />,
+    text: "Queries",
+    url: "/admin/queries",
   },
 ];
 
@@ -52,7 +51,7 @@ const active_text = {
   Workshops: "workshop",
   Testimonials: "testimonial",
   Transactions: "transaction",
-  Images: "image",
+  Queries: "queries",
 };
 
 export default function SideNavbar({ isExpanded }) {
