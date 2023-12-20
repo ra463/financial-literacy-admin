@@ -136,7 +136,6 @@ export default function EditUserModel(props) {
               <Form.Control
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
-                required
               />
             </Form.Group>
 

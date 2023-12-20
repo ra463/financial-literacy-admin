@@ -164,17 +164,9 @@ export default function Users() {
                         <td>{user?.mobile_no}</td>
                         <td>
                           {user?.role === "admin" ? (
-                            <span style={{ color: "red", fontWeight: "bold" }}>
-                              {user?.role.charAt(0).toUpperCase() +
-                                user?.role.slice(1)}
-                            </span>
+                            <span className="badge bg-primary">Admin</span>
                           ) : (
-                            <span
-                              style={{ color: "green", fontWeight: "bold" }}
-                            >
-                              {user?.role.charAt(0).toUpperCase() +
-                                user?.role.slice(1)}
-                            </span>
+                            <span className="badge bg-success">User</span>
                           )}
                         </td>
                         <td>

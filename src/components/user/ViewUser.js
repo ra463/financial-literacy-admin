@@ -118,7 +118,11 @@ const ViewUser = () => {
                     <p className="mb-0">
                       <strong>Role</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : user?.role}</p>
+                    {user?.role === "admin" ? (
+                      <p style={{ color: "green" }}>Admin</p>
+                    ) : (
+                      <p style={{ color: "red" }}>User</p>
+                    )}
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
