@@ -42,7 +42,7 @@ export default function UpdateProfileModel(props) {
           payload: getError(err),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     };
@@ -67,7 +67,6 @@ export default function UpdateProfileModel(props) {
         {
           firstname,
           lastname,
-          // fax,
           mobile_no,
         },
         {
@@ -91,13 +90,13 @@ export default function UpdateProfileModel(props) {
       } else {
         dispatch({ type: "UPDATE_FAIL" });
         toast.error(data.error.message, {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL" });
       toast.error(getError(err), {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };

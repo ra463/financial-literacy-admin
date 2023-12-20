@@ -80,7 +80,13 @@ const ViewTransaction = () => {
                     <p className="mb-0">
                       <strong>Transaction ID</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : transaction?.transactionId}</p>
+                    <p
+                      style={{
+                        color: "orangered",
+                      }}
+                    >
+                      {loading ? <Skeleton /> : transaction?.transactionId}
+                    </p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
@@ -168,7 +174,7 @@ const ViewTransaction = () => {
                       {loading ? (
                         <Skeleton />
                       ) : (
-                        `1 x ${transaction?.order?.course?._id}`
+                        `1 x ${transaction?.order?.course?.course_id}`
                       )}
                     </p>
                   </Col>
@@ -239,7 +245,7 @@ const ViewTransaction = () => {
                     <p className="mb-0">
                       <strong>Course ID</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : transaction?.course?._id}</p>
+                    <p>{loading ? <Skeleton /> : transaction?.course?.course_id}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">

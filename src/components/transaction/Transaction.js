@@ -14,10 +14,9 @@ import {
 } from "react-bootstrap";
 import CustomPagination from "../layout/CustomPagination";
 import axiosInstance from "../../utils/axiosUtil";
-import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import { FaEye, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
 import CustomSkeleton from "../layout/CustomSkeleton";
-import LoadingBox from "../layout/LoadingBox";
 import { getTransactionReducer } from "../../reducers/transaction";
 
 export default function Transaction() {
@@ -29,45 +28,16 @@ export default function Transaction() {
   const [resultPerPage, setResultPerPage] = useState(10);
   const [searchInput, setSearchInput] = useState("");
   const [query, setQuery] = useState("");
-  const [del, setDel] = useState(false);
 
   const curPageHandler = (p) => setCurPage(p);
 
   const [
-    { deleteLoading, loading, error, transactions, filteredTransactionsCount },
+    { loading, error, transactions, filteredTransactionsCount },
     dispatch,
   ] = useReducer(getTransactionReducer, {
     loading: true,
     error: "",
   });
-
-  const deleteTransaction = async (id) => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this Transaction?\n\nNote: All Related details like TransactionId and all other things will also be deleted Permanently."
-      ) === true
-    ) {
-      try {
-        setDel(true);
-        const res = await axiosInstance.delete(
-          `/api/admin/delete-transaction/${id}`,
-          {
-            headers: { Authorization: token },
-          }
-        );
-        setDel(false);
-        if (res.data) {
-          toast.success("Transaction Deleted Succesfully", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-        }
-      } catch (error) {
-        toast.error(getError(error), {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      }
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,12 +56,12 @@ export default function Transaction() {
           payload: getError(error),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     };
     fetchData();
-  }, [token, del, curPage, resultPerPage, query]);
+  }, [token, curPage, resultPerPage, query]);
 
   const numOfPages = Math.ceil(filteredTransactionsCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
@@ -191,20 +161,6 @@ export default function Transaction() {
                               className="btn btn-primary"
                             >
                               <FaEye />
-                            </Button>
-                            <Button
-                              disabled={loading ? true : false}
-                              onClick={() => {
-                                deleteTransaction(transaction._id);
-                              }}
-                              type="danger"
-                              className="btn btn-danger ms-2"
-                            >
-                              {deleteLoading ? (
-                                <LoadingBox></LoadingBox>
-                              ) : (
-                                <FaTrashAlt className="m-auto" />
-                              )}
                             </Button>
                           </td>
                         </tr>

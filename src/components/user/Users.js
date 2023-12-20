@@ -59,7 +59,7 @@ export default function Users() {
         }
       } catch (error) {
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     }
@@ -83,7 +83,7 @@ export default function Users() {
           payload: getError(error),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     };
@@ -141,6 +141,7 @@ export default function Users() {
                 <thead>
                   <tr>
                     <th>S.No</th>
+                    <th>Client Id</th>
                     <th>Firstname</th>
                     <th>Lastname</th>
                     <th>Email</th>
@@ -156,6 +157,7 @@ export default function Users() {
                     users.map((user, i) => (
                       <tr key={user?._id} className="odd">
                         <td className="text-center">{skip + i + 1}</td>
+                        <td style={{ color: "orange" }}>{user?.client_id}</td>
                         <td>{user?.firstname}</td>
                         <td>{user?.lastname}</td>
                         <td>{user?.email}</td>

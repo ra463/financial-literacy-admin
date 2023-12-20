@@ -170,6 +170,7 @@ export default function Courses() {
                   <thead>
                     <tr>
                       <th>S.No</th>
+                      <th>Course Id</th>
                       <th>Title</th>
                       <th>Category</th>
                       <th>Price</th>
@@ -182,12 +183,15 @@ export default function Courses() {
                     {loading ? (
                       <CustomSkeleton
                         resultPerPage={resultPerPage}
-                        column={7}
+                        column={8}
                       />
                     ) : courses && courses.length > 0 ? (
                       courses.map((course, i) => (
                         <tr key={course?._id} className="odd">
                           <td className="text-center">{skip + i + 1}</td>
+                          <td style={{ color: "orange" }}>
+                            #{course?.course_id}
+                          </td>
                           <td>{course?.title}</td>
                           <td>{course?.category}</td>
                           <td>${course?.price}</td>

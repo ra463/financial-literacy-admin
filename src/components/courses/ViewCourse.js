@@ -59,7 +59,7 @@ const ViewCourse = () => {
         if (res.data) {
           dispatch1({ type: "DELETE_SECTION_RESET" });
           toast.success("Section Deleted Succesfully", {
-            position: toast.POSITION.BOTTOM_CENTER,
+            position: toast.POSITION.TOP_CENTER,
           });
           setTimeout(() => {
             window.location.reload();
@@ -71,7 +71,7 @@ const ViewCourse = () => {
           payload: getError(error),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     }
@@ -120,7 +120,7 @@ const ViewCourse = () => {
           payload: getError(err),
         });
         toast.error(getError(err), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     };
@@ -160,15 +160,23 @@ const ViewCourse = () => {
                 <Row>
                   <Col md={4}>
                     <p className="mb-0">
+                      <strong>Course Id</strong>
+                    </p>
+                    <p style={{ color: "orange" }}>
+                      #{loading ? <Skeleton /> : course?.course_id}
+                    </p>
+                  </Col>
+                  <Col md={4}>
+                    <p className="mb-0">
                       <strong>Title</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : course.title}</p>
+                    <p>{loading ? <Skeleton /> : course?.title}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
                       <strong>Category</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : course.category}</p>
+                    <p>{loading ? <Skeleton /> : course?.category}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
@@ -180,7 +188,7 @@ const ViewCourse = () => {
                       ) : (
                         course?.class_type.length > 0 &&
                         course?.class_type.map((cls, i) => (
-                          <span key={i}>{cls},{" "}</span>
+                          <span key={i}>{cls}, </span>
                         ))
                       )}
                     </p>
@@ -189,26 +197,26 @@ const ViewCourse = () => {
                     <p className="mb-0">
                       <strong>Price</strong>
                     </p>
-                    <p>${loading ? <Skeleton /> : course.price}</p>
+                    <p>${loading ? <Skeleton /> : course?.price}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
                       <strong>Creator Name</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : course.createdBy.name}</p>
+                    <p>{loading ? <Skeleton /> : course?.createdBy.name}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
                       <strong>Creator Title</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : course.createdBy.title}</p>
+                    <p>{loading ? <Skeleton /> : course?.createdBy.title}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
                       <strong>Created At</strong>
                     </p>
                     <p>
-                      {loading ? <Skeleton /> : getDateTime(course.createdAt)}
+                      {loading ? <Skeleton /> : getDateTime(course?.createdAt)}
                     </p>
                   </Col>
                   <Col md={4}>
@@ -216,7 +224,7 @@ const ViewCourse = () => {
                       <strong>Last Update</strong>
                     </p>
                     <p>
-                      {loading ? <Skeleton /> : getDateTime(course.updatedAt)}
+                      {loading ? <Skeleton /> : getDateTime(course?.updatedAt)}
                     </p>
                   </Col>
                 </Row>
