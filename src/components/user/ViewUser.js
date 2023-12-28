@@ -100,7 +100,15 @@ const ViewUser = () => {
                     <p className="mb-0">
                       <strong>Lastname</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : user?.lastname}</p>
+                    <p>
+                      {loading ? (
+                        <Skeleton />
+                      ) : user?.lastname ? (
+                        user?.lastname
+                      ) : (
+                        "N/A"
+                      )}
+                    </p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">

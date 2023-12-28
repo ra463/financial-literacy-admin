@@ -159,7 +159,7 @@ export default function Users() {
                         <td className="text-center">{skip + i + 1}</td>
                         <td style={{ color: "orange" }}>#{user?.client_id}</td>
                         <td>{user?.firstname}</td>
-                        <td>{user?.lastname}</td>
+                        <td>{user?.lastname ? user?.lastname : "N/A"}</td>
                         <td>{user?.email}</td>
                         <td>{user?.mobile_no}</td>
                         <td>

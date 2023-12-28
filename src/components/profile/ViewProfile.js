@@ -79,7 +79,7 @@ const ViewProfile = () => {
                   <p className="mb-0">
                     <strong>Lastname</strong>
                   </p>
-                  <p>{user.lastname}</p>
+                  <p>{user.lastname ? user.lastname : "N/A"}</p>
                 </Col>
                 <Col md={4}>
                   <p className="mb-0">

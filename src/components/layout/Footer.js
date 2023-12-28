@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { Store } from "../../Store";
 
 export default function Footer() {
-  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { state } = useContext(Store);
   const { userInfo } = state;
   const d = new Date();
   return (

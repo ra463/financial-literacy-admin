@@ -122,7 +122,6 @@ export default function UpdateProfileModel(props) {
               <Form.Control
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
-                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastname">
@@ -130,7 +129,6 @@ export default function UpdateProfileModel(props) {
               <Form.Control
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
-                required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="mobile_no">
@@ -138,7 +136,6 @@ export default function UpdateProfileModel(props) {
               <Form.Control
                 value={mobile_no}
                 onChange={(e) => setMobileNo(e.target.value)}
-                required
               />
             </Form.Group>
 

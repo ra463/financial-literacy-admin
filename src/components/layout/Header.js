@@ -223,7 +223,9 @@ export default function Header({ sidebarHandler }) {
                     <Dropdown.Header>
                       Signed in as
                       <br />
-                      <b>{`${userInfo.firstname} ${userInfo.lastname}`}</b>
+                      <b>{`${userInfo.firstname} ${
+                        userInfo.lastname ? userInfo.lastname : ""
+                      }`}</b>
                     </Dropdown.Header>
 
                     <Dropdown.Divider />
