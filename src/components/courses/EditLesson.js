@@ -11,6 +11,7 @@ export default function EditLessonsModal({
   id,
   sectionId,
   lessonId,
+  les,
   ...props
 }) {
   const { state } = useContext(Store);
@@ -21,9 +22,9 @@ export default function EditLessonsModal({
     error: "",
   });
 
-  const [title, setTitle] = useState("");
-  const [video_desc, setVideo_desc] = useState("");
-  const [video, setVideo] = useState("");
+  const [title, setTitle] = useState(les?.video_title);
+  const [video_desc, setVideo_desc] = useState(les?.video_desc);
+  const [video, setVideo] = useState(les?.video);
   const [videoPreview, setVideoPreview] = useState("");
 
   useEffect(() => {
@@ -39,12 +40,12 @@ export default function EditLessonsModal({
     const file = e.target.files[0];
     if (file.type !== "video/mp4" && file.type !== "video/mkv") {
       toast.error("Invalid video format! only mp4 & mkv allowed.", {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
       return;
     } else if (file.size > 1024 * 1024 * 50) {
       toast.error("Video size too large! only 50mb allowed.", {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
       return;
     }
@@ -116,6 +117,7 @@ export default function EditLessonsModal({
               <Form.Control
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                required
               />
             </Form.Group>
 
@@ -126,6 +128,7 @@ export default function EditLessonsModal({
                 onChange={(e) => setVideo_desc(e.target.value)}
                 as="textarea"
                 rows={5}
+                required
               />
             </Form.Group>
 
@@ -135,6 +138,7 @@ export default function EditLessonsModal({
                 type="file"
                 onChange={handleVideoChange}
                 accept="video/*"
+                required
               />
             </Form.Group>
             {

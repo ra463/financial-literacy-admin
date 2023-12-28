@@ -76,7 +76,7 @@ const ViewSection = () => {
           payload: getError(error),
         });
         toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
     }
@@ -186,6 +186,16 @@ const ViewSection = () => {
                               deleteLoading={deleteLoading}
                             />
                           )}
+                          {editLessonModalShow && (
+                            <EditLessonsModal
+                              show={editLessonModalShow}
+                              onHide={() => setEditLessonModalShow(false)}
+                              id={id}
+                              sectionId={sectionId}
+                              lessonId={lessonId}
+                              les={les}
+                            />
+                          )}
                         </tr>
                       ))
                     ) : (
@@ -204,13 +214,6 @@ const ViewSection = () => {
               onHide={() => setLessonModalShow(false)}
               id={id}
               sectionId={sectionId}
-            />
-            <EditLessonsModal
-              show={editLessonModalShow}
-              onHide={() => setEditLessonModalShow(false)}
-              id={id}
-              sectionId={sectionId}
-              lessonId={lessonId}
             />
             <ToastContainer />
           </>

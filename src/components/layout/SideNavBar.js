@@ -56,7 +56,7 @@ const active_text = {
 
 export default function SideNavbar({ isExpanded }) {
   const pathname = window.location.pathname;
-  const [activeLink, setActiveLink] = useState("Dashboard");
+  const [activeLink, setActiveLink] = useState("User");
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const navigate = useNavigate();
