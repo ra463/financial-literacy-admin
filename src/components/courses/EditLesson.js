@@ -11,7 +11,9 @@ export default function EditLessonsModal({
   id,
   sectionId,
   lessonId,
-  les,
+  les_title,
+  les_desc,
+  les_video,
   ...props
 }) {
   const { state } = useContext(Store);
@@ -22,9 +24,9 @@ export default function EditLessonsModal({
     error: "",
   });
 
-  const [title, setTitle] = useState(les?.video_title);
-  const [video_desc, setVideo_desc] = useState(les?.video_desc);
-  const [video, setVideo] = useState(les?.video);
+  const [title, setTitle] = useState(les_title);
+  const [video_desc, setVideo_desc] = useState(les_desc);
+  const [video, setVideo] = useState(les_video);
   const [videoPreview, setVideoPreview] = useState("");
 
   useEffect(() => {

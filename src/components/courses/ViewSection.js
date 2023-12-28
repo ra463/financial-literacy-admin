@@ -140,6 +140,7 @@ const ViewSection = () => {
                     <tr>
                       <th>S No.</th>
                       <th>Title</th>
+                      <th>Description</th>
                       <th>Video</th>
                       <th>Actions</th>
                     </tr>
@@ -154,6 +155,7 @@ const ViewSection = () => {
                           <td>
                             <strong>{les.video_title}</strong>
                           </td>
+                          <td>{les.video_desc}</td>
                           <td>
                             <video
                               width="320"
@@ -193,7 +195,9 @@ const ViewSection = () => {
                               id={id}
                               sectionId={sectionId}
                               lessonId={lessonId}
-                              les={les}
+                              les_title={les?.video_title}
+                              les_desc={les?.video_desc}
+                              les_video={les?.video}
                             />
                           )}
                         </tr>
