@@ -34,12 +34,12 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
     const file = e.target.files[0];
     if (file.type !== "video/mp4" && file.type !== "video/mkv") {
       toast.error("Invalid video format! only mp4 & mkv allowed.", {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
       return;
     } else if (file.size > 1024 * 1024 * 50) {
       toast.error("Video size too large! only 50mb allowed.", {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
       return;
     }
@@ -81,11 +81,10 @@ export default function AddLessonsModal({ id, sectionId, ...props }) {
 
       if (data) {
         dispatch({ type: "ADD_SUCCESS" });
-        props.onHide();
         toast.success("Lesson Added Succesfully", {
           position: toast.POSITION.TOP_CENTER,
         });
-
+        props.onHide();
         setTimeout(() => {
           window.location.reload();
         }, 3000);

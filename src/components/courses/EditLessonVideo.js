@@ -4,16 +4,12 @@ import { getError } from "../../utils/error";
 import { updateLessonReducer } from "../../reducers/course";
 import { toast, ToastContainer } from "react-toastify";
 import { Modal, Form, Button, Container } from "react-bootstrap";
-import LoadingBox from "../layout/LoadingBox";
 import axiosInstance from "../../utils/axiosUtil";
 
-export default function EditLessonsModal({
+export default function EditLessonVideoModal({
   id,
   sectionId,
   lessonId,
-  les_title,
-  les_desc,
-  les_video,
   ...props
 }) {
   const { state } = useContext(Store);
@@ -24,16 +20,14 @@ export default function EditLessonsModal({
     error: "",
   });
 
-  const [title, setTitle] = useState(les_title);
-  const [video_desc, setVideo_desc] = useState(les_desc);
-  const [video, setVideo] = useState(les_video);
+  const [video, setVideo] = useState("");
   const [videoPreview, setVideoPreview] = useState("");
+  const [progress, setProgress] = useState(0);
+  console.log(progress);
 
   useEffect(() => {
     if (!props.show) {
       setVideo("");
-      setVideo_desc("");
-      setTitle("");
       setVideoPreview("");
     }
   }, [props.show]);
@@ -62,31 +56,34 @@ export default function EditLessonsModal({
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
 
-    formData.append("title", title);
-    formData.append("video_desc", video_desc);
-    formData.append("video", video);
+    const formdata = new FormData();
+    formdata.append("video", video);
 
     try {
       dispatch({ type: "UPDATE_REQUEST" });
 
-      const { data } = await axiosInstance.put(
-        `/api/admin/update-lesson/${id}/${sectionId}/${lessonId}`,
-        formData,
+      const { data } = await axiosInstance.patch(
+        `/api/admin/update-lesson-video/${id}/${sectionId}/${lessonId}`,
+        formdata,
         {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: token,
           },
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            let percent = Math.floor((loaded * 100) / total);
+            setProgress(percent);
+          },
         }
       );
 
       if (data.message) {
+        dispatch({ type: "UPDATE_SUCCESS" });
         toast.success("Lesson Updated Succesfully", {
           position: toast.POSITION.TOP_CENTER,
         });
-        dispatch({ type: "UPDATE_SUCCESS" });
         props.onHide();
         setTimeout(() => {
           window.location.reload();
@@ -94,7 +91,7 @@ export default function EditLessonsModal({
       }
     } catch (error) {
       toast.error(getError(error), {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       });
     }
   };
@@ -108,32 +105,12 @@ export default function EditLessonsModal({
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          Edit/Update Lesson
+          Edit/Update Lesson Video
         </Modal.Title>
       </Modal.Header>
       <Form onSubmit={submitHandler}>
         <Modal.Body>
           <Container className="small-container">
-            <Form.Group className="mb-3" controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="title">
-              <Form.Label>Video Description</Form.Label>
-              <Form.Control
-                value={video_desc}
-                onChange={(e) => setVideo_desc(e.target.value)}
-                as="textarea"
-                rows={5}
-                required
-              />
-            </Form.Group>
-
             <Form.Group className="mb-3" controlId="video">
               <Form.Label>Video</Form.Label>
               <Form.Control
@@ -153,17 +130,35 @@ export default function EditLessonsModal({
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={props.onHide}>
-            Close
-          </Button>
-          <Button
-            variant="success"
-            type="submit"
-            disabled={loading ? true : false}
-          >
-            Submit
-          </Button>
-          {loading && <LoadingBox></LoadingBox>}
+          {progress > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "10px",
+                width: "100%",
+              }}
+            >
+              <progress style={{ width: "100%" }} max="100" value={progress} />
+              <Button style={{ width: "100%" }} variant="success">
+                {progress > 99 ? "Processing..." : `Uploading ${progress}%`}
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Button variant="danger" onClick={props.onHide}>
+                Close
+              </Button>
+              <Button
+                variant="success"
+                type="submit"
+                disabled={loading ? true : false}
+              >
+                Submit
+              </Button>
+            </>
+          )}
         </Modal.Footer>
       </Form>
     </Modal>

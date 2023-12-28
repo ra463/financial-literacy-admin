@@ -21,8 +21,9 @@ import Skeleton from "react-loading-skeleton";
 import { FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import AddLessonsModal from "./AddLessons";
-import EditLessonsModal from "./EditLesson";
+import EditLessonDetailsModal from "./EditLessonDetails";
 import DeleteModal from "./DeleteModal";
+import EditLessonVideoModal from "./EditLessonVideo";
 
 const ViewSection = () => {
   const { state } = useContext(Store);
@@ -30,7 +31,10 @@ const ViewSection = () => {
   const { id, sectionId } = useParams(); // user/:id
 
   const [lessonModalShow, setLessonModalShow] = useState(false);
-  const [editLessonModalShow, setEditLessonModalShow] = useState(false);
+  const [editLessonDetailsModalShow, setEditLessonDetailsModalShow] =
+    useState(false);
+  const [editLessonVideoModalShow, setEditLessonVideoModalShow] =
+    useState(false);
   const [deleteBox, setDeleteBox] = useState(false);
   const [lessonId, setLessonId] = useState("");
 
@@ -105,9 +109,14 @@ const ViewSection = () => {
     fetchData();
   }, [id, token]);
 
-  const setThings = (lessonId) => {
+  const setThings1 = (lessonId) => {
     setLessonId(lessonId);
-    setEditLessonModalShow(true);
+    setEditLessonDetailsModalShow(true);
+  };
+
+  const setThings2 = (lessonId) => {
+    setLessonId(lessonId);
+    setEditLessonVideoModalShow(true);
   };
 
   return (
@@ -165,20 +174,37 @@ const ViewSection = () => {
                             />
                           </td>
                           <td>
-                            <Button
-                              type="danger"
-                              className="btn btn-danger"
-                              onClick={() => setDeleteBox(true)}
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "column",
+                                gap:"10px"
+                              }}
                             >
-                              <FaTrashAlt className="m-auto" />
-                            </Button>
-                            <Button
-                              type="success"
-                              className="btn btn-success ms-2"
-                              onClick={() => setThings(les._id)}
-                            >
-                              <FaEdit className="m-auto" />
-                            </Button>
+                              <Button
+                                type="danger"
+                                className="btn btn-danger"
+                                onClick={() => setDeleteBox(true)}
+                              >
+                                <FaTrashAlt className="m-auto" /> Delete Lesson
+                              </Button>
+                              <Button
+                                type="success"
+                                className="btn btn-success ms-2"
+                                onClick={() => setThings1(les._id)}
+                              >
+                                <FaEdit className="m-auto" /> Edit Details
+                              </Button>
+                              <Button
+                                type="secondary"
+                                className="btn btn-secondary ms-2"
+                                onClick={() => setThings2(les._id)}
+                              >
+                                <FaEdit className="m-auto" /> Update Video
+                              </Button>
+                            </div>
                           </td>
                           {deleteBox && (
                             <DeleteModal
@@ -188,23 +214,33 @@ const ViewSection = () => {
                               deleteLoading={deleteLoading}
                             />
                           )}
-                          {editLessonModalShow && (
-                            <EditLessonsModal
-                              show={editLessonModalShow}
-                              onHide={() => setEditLessonModalShow(false)}
+                          {editLessonDetailsModalShow && (
+                            <EditLessonDetailsModal
+                              show={editLessonDetailsModalShow}
+                              onHide={() =>
+                                setEditLessonDetailsModalShow(false)
+                              }
                               id={id}
                               sectionId={sectionId}
                               lessonId={lessonId}
                               les_title={les?.video_title}
                               les_desc={les?.video_desc}
-                              les_video={les?.video}
+                            />
+                          )}
+                          {editLessonVideoModalShow && (
+                            <EditLessonVideoModal
+                              show={editLessonVideoModalShow}
+                              onHide={() => setEditLessonVideoModalShow(false)}
+                              id={id}
+                              sectionId={sectionId}
+                              lessonId={lessonId}
                             />
                           )}
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={4} className="text-center">
+                        <td colSpan={5} className="text-center">
                           No Lesson(s) Found
                         </td>
                       </tr>
