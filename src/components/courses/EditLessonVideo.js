@@ -23,7 +23,6 @@ export default function EditLessonVideoModal({
   const [video, setVideo] = useState("");
   const [videoPreview, setVideoPreview] = useState("");
   const [progress, setProgress] = useState(0);
-  console.log(progress);
 
   useEffect(() => {
     if (!props.show) {
