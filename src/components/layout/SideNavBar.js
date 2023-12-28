@@ -82,11 +82,18 @@ export default function SideNavbar({ isExpanded }) {
               : "side-nav-container side-nav-container-NX"
           }
         >
-          <div className="brand-link">
-            {/* <img src={edwin_logo} alt="" width={"50px"} height="auto" /> */}
-            <span className="brand-text ms-2 font-weight-light">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+            className="brand-link"
+          >
+            <img src="/karmill.jpg" alt="" width={"210px"} height={"60px"} />
+            {/* <span className="brand-text ms-2 font-weight-light">
               Karmill Financial Literacy
-            </span>
+            </span> */}
           </div>
 
           <div className="sidebar">
@@ -107,9 +114,11 @@ export default function SideNavbar({ isExpanded }) {
                     />
                   )}
                   <span className="info-text">
-                    Welcome{" "}
+                    Welcome!{" "}
                     {userInfo
-                      ? `${userInfo.firstname} ${userInfo.lastname && userInfo.lastname}`
+                      ? `${userInfo.firstname} ${
+                          userInfo.lastname ? userInfo.lastname : ""
+                        }`
                       : "Back"}
                   </span>
                 </Link>
