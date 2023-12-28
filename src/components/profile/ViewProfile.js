@@ -46,7 +46,7 @@ const ViewProfile = () => {
 
   const getDateTime = (dt) => {
     const dT = dt.split(".")[0].split("T");
-    return `${dT[0]} ${dT[1]}`;
+    return `${dT[0]} || ${dT[1]}`;
   };
 
   return (
@@ -59,7 +59,9 @@ const ViewProfile = () => {
         <>
           <Card>
             <Card.Header>
-              <Card.Title>{`${user.firstname} ${user.lastname}`}</Card.Title>
+              <Card.Title>{`${user.firstname} ${
+                user.lastname ? user?.lastname : ""
+              }`}</Card.Title>
               <div className="card-tools">
                 <FaEdit
                   style={{ color: "blue" }}

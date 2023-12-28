@@ -359,6 +359,7 @@ const ViewCourse = () => {
                           <tr>
                             <th>S.No</th>
                             <th>Title</th>
+                            <th>Description</th>
                             <th>Video Preview</th>
                             <th>Video Duration</th>
                           </tr>
@@ -370,15 +371,16 @@ const ViewCourse = () => {
                             Lecture?.section?.lessons.map((les, index) => (
                               <tr key={les._id}>
                                 <td>{index + 1}</td>
-                                <td>{les.video_title}</td>
+                                <td>{les?.video_title}</td>
+                                <td>{les?.video_desc}</td>
                                 <td>
                                   <video
                                     className="view-video"
-                                    src={les.video}
+                                    src={les?.video}
                                   />
                                 </td>
                                 <td>
-                                  {les.duration && (
+                                  {les?.duration && (
                                     <>
                                       {Math.floor(les.duration / 60)}:
                                       {(les.duration % 60)
@@ -391,7 +393,7 @@ const ViewCourse = () => {
                             ))
                           ) : (
                             <tr>
-                              <td colSpan={4} className="text-center">
+                              <td colSpan={5} className="text-center">
                                 No Lesson(s) Found
                               </td>
                             </tr>
