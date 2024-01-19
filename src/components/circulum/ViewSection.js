@@ -2,9 +2,9 @@ import React, { useEffect, useReducer, useContext, useState } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
 import {
-  viewCourseReducer as reducer,
-  deleteLessonReducer,
-} from "../../reducers/course";
+  viewCirculumReducer as reducer,
+  deleteCirculumLessonReducer,
+} from "../../reducers/circulums";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Button, Card, Container, Table } from "react-bootstrap";
@@ -14,12 +14,11 @@ import { FaEdit } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
-import AddLessonsModal from "./AddLessons";
-import EditLessonDetailsModal from "./EditLessonDetails";
-import DeleteModal from "./DeleteModal";
-import EditLessonVideoModal from "./EditLessonVideo";
+import DeleteLesson from "./DeleteLesson";
+import EditLesson from "./EditLesson";
+import AddLesson from "./AddLesson";
 
-const ViewSection = () => {
+const ViewCirculumSection = () => {
   const { state } = useContext(Store);
   const { token } = state;
   const { id, sectionId } = useParams(); // user/:id
@@ -27,56 +26,52 @@ const ViewSection = () => {
   const [lessonModalShow, setLessonModalShow] = useState(false);
   const [editLessonDetailsModalShow, setEditLessonDetailsModalShow] =
     useState(false);
-  const [editLessonVideoModalShow, setEditLessonVideoModalShow] =
-    useState(false);
   const [deleteBox, setDeleteBox] = useState(false);
   const [lessonId, setLessonId] = useState("");
 
-  const [{ loading, error, course }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, circulum }, dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
   });
 
   const [{ loading: deleteLoading }, dispatch1] = useReducer(
-    deleteLessonReducer,
+    deleteCirculumLessonReducer,
     {
       loading: false,
       error: "",
     }
   );
 
-  const Lecture = course?.lectures?.find((l) => l._id.toString() === sectionId);
+  const Lecture = circulum?.lectures?.find(
+    (l) => l._id.toString() === sectionId
+  );
 
   const deleteLecture = async (lessonId) => {
-    if (
-      window.confirm("Are you sure you want to delete this Lecture?") === true
-    ) {
-      try {
-        dispatch1({ type: "DELETE_REQUEST" });
-        const res = await axiosInstance.delete(
-          `/api/admin/delete-lesson/${id}/${sectionId}/${lessonId}`,
-          {
-            headers: { Authorization: token },
-          }
-        );
-        if (res.data) {
-          toast.success("Lesson Deleted Succesfully", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          dispatch1({ type: "DELETE_SUCCESS" });
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+    try {
+      dispatch1({ type: "DELETE_REQUEST" });
+      const res = await axiosInstance.delete(
+        `/api/admin/delete-circulum-lesson/${id}/${sectionId}/${lessonId}`,
+        {
+          headers: { Authorization: token },
         }
-      } catch (error) {
-        dispatch1({
-          type: "DELETE_FAIL",
-          payload: getError(error),
-        });
-        toast.error(getError(error), {
+      );
+      if (res.data) {
+        toast.success("Lesson Deleted Succesfully", {
           position: toast.POSITION.TOP_CENTER,
         });
+        dispatch1({ type: "DELETE_SUCCESS" });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       }
+    } catch (error) {
+      dispatch1({
+        type: "DELETE_FAIL",
+        payload: getError(error),
+      });
+      toast.error(getError(error), {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -85,9 +80,12 @@ const ViewSection = () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
 
-        const { data } = await axiosInstance.get(`/api/admin/getcourse/${id}`, {
-          headers: { Authorization: token },
-        });
+        const { data } = await axiosInstance.get(
+          `/api/admin/get-circulum/${id}`,
+          {
+            headers: { Authorization: token },
+          }
+        );
 
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (error) {
@@ -103,14 +101,13 @@ const ViewSection = () => {
     fetchData();
   }, [id, token]);
 
+  const setThings = (id) => {
+    setLessonId(id);
+    setDeleteBox(true);
+  };
   const setThings1 = (lessonId) => {
     setLessonId(lessonId);
     setEditLessonDetailsModalShow(true);
-  };
-
-  const setThings2 = (lessonId) => {
-    setLessonId(lessonId);
-    setEditLessonVideoModalShow(true);
   };
 
   return (
@@ -144,7 +141,6 @@ const ViewSection = () => {
                       <th>S No.</th>
                       <th>Title</th>
                       <th>Description</th>
-                      <th>Video</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -156,17 +152,9 @@ const ViewSection = () => {
                         <tr key={les._id} className={les._id}>
                           <td>{i + 1}</td>
                           <td>
-                            <strong>{les.video_title}</strong>
+                            <strong>{les.lesson_title}</strong>
                           </td>
-                          <td>{les.video_desc}</td>
-                          <td>
-                            <video
-                              width="320"
-                              height="240"
-                              controls
-                              src={les.video}
-                            />
-                          </td>
+                          <td>{les.lesson_desc}</td>
                           <td>
                             <div
                               style={{
@@ -180,7 +168,7 @@ const ViewSection = () => {
                               <Button
                                 type="danger"
                                 className="btn btn-danger"
-                                onClick={() => setDeleteBox(true)}
+                                onClick={() => setThings(les._id)}
                               >
                                 <FaTrashAlt className="m-auto" /> Delete Lesson
                               </Button>
@@ -191,25 +179,10 @@ const ViewSection = () => {
                               >
                                 <FaEdit className="m-auto" /> Edit Details
                               </Button>
-                              <Button
-                                type="secondary"
-                                className="btn btn-secondary ms-2"
-                                onClick={() => setThings2(les._id)}
-                              >
-                                <FaEdit className="m-auto" /> Update Video
-                              </Button>
                             </div>
                           </td>
-                          {deleteBox && (
-                            <DeleteModal
-                              show={deleteBox}
-                              onHide={() => setDeleteBox(false)}
-                              deleteHandler={() => deleteLecture(les._id)}
-                              deleteLoading={deleteLoading}
-                            />
-                          )}
                           {editLessonDetailsModalShow && (
-                            <EditLessonDetailsModal
+                            <EditLesson
                               show={editLessonDetailsModalShow}
                               onHide={() =>
                                 setEditLessonDetailsModalShow(false)
@@ -217,24 +190,15 @@ const ViewSection = () => {
                               id={id}
                               sectionId={sectionId}
                               lessonId={lessonId}
-                              les_title={les?.video_title}
-                              les_desc={les?.video_desc}
-                            />
-                          )}
-                          {editLessonVideoModalShow && (
-                            <EditLessonVideoModal
-                              show={editLessonVideoModalShow}
-                              onHide={() => setEditLessonVideoModalShow(false)}
-                              id={id}
-                              sectionId={sectionId}
-                              lessonId={lessonId}
+                              les_title={les?.lesson_title}
+                              les_desc={les?.lesson_desc}
                             />
                           )}
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={5} className="text-center">
+                        <td colSpan={4} className="text-center">
                           No Lesson(s) Found
                         </td>
                       </tr>
@@ -243,7 +207,7 @@ const ViewSection = () => {
                 </Table>
               </Card.Body>
             </Card>
-            <AddLessonsModal
+            <AddLesson
               show={lessonModalShow}
               onHide={() => setLessonModalShow(false)}
               id={id}
@@ -253,8 +217,15 @@ const ViewSection = () => {
           </>
         )}
       </Container>
+
+      <DeleteLesson
+        show={deleteBox}
+        onHide={() => setDeleteBox(false)}
+        deleteHandler={() => deleteLecture(lessonId)}
+        deleteLoading={deleteLoading}
+      />
     </motion.div>
   );
 };
 
-export default ViewSection;
+export default ViewCirculumSection;

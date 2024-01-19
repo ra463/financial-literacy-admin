@@ -17,9 +17,9 @@ import ViewUser from "./components/user/ViewUser";
 
 import AdminLoginScreen from "./components/AdminLoginScreen";
 import UnprotectedRoute from "./components/protectedRoute/UnprotectedRoute";
-import Courses from "./components/courses/Course";
-import ViewCourse from "./components/courses/ViewCourse";
-import ViewSection from "./components/courses/ViewSection";
+// import Courses from "./components/courses/Course";
+// import ViewCourse from "./components/courses/ViewCourse";
+// import ViewSection from "./components/courses/ViewSection";
 import Workshop from "./components/workshops/Workshop";
 import Viewworkshop from "./components/workshops/Viewworkshop";
 import Transaction from "./components/transaction/Transaction";
@@ -29,6 +29,9 @@ import ViewTestimonial from "./components/testimonial/ViewTestimonial";
 import Dashboard from "./components/layout/Dashboard";
 import Query from "./components/query/Query";
 import ViewQuery from "./components/query/ViewQuery";
+import Circulum from "./components/circulum/Circulum";
+import ViewCirculum from "./components/circulum/ViewCirculum";
+import ViewCirculumSection from "./components/circulum/ViewSection";
 
 function App() {
   const { state } = useContext(Store);
@@ -43,18 +46,24 @@ function App() {
     { path: "/view-profile", element: <ViewProfile /> },
     { path: "/admin/dashboard", element: <Dashboard /> },
     { path: "/admin/users", element: <Users /> },
-    { path: "/admin/courses", element: <Courses /> },
+    // { path: "/admin/courses", element: <Courses /> },
     { path: "/admin/workshops", element: <Workshop /> },
     { path: "/admin/transactions", element: <Transaction /> },
     { path: "/admin/testimonials", element: <Testimonial /> },
     { path: "/admin/queries", element: <Query /> },
-    { path: "/admin/view/course/:id", element: <ViewCourse /> },
+    { path: "/admin/circulums", element: <Circulum /> },
+    // { path: "/admin/view/course/:id", element: <ViewCourse /> },
     { path: "/admin/view/user/:id", element: <ViewUser /> },
-    { path: "/admin/view/course/:id/:sectionId", element: <ViewSection /> },
+    // { path: "/admin/view/course/:id/:sectionId", element: <ViewSection /> },
     { path: "/admin/view/workshop/:id", element: <Viewworkshop /> },
     { path: "/admin/view/transaction/:id", element: <ViewTransaction /> },
     { path: "/admin/view/testimonial/:id", element: <ViewTestimonial /> },
     { path: "/admin/view/query/:id", element: <ViewQuery /> },
+    { path: "/admin/view/circulum/:id", element: <ViewCirculum /> },
+    {
+      path: "/admin/view/circulum/:id/:sectionId",
+      element: <ViewCirculumSection />,
+    },
   ];
 
   return (

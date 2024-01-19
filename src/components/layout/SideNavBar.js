@@ -16,10 +16,15 @@ const linkList = [
     text: "Dashboard",
     url: "/admin/dashboard",
   },
+  // {
+  //   icon: <BiSolidBook className="icon-md" />,
+  //   text: "Courses",
+  //   url: "/admin/courses",
+  // },
   {
     icon: <BiSolidBook className="icon-md" />,
-    text: "Courses",
-    url: "/admin/courses",
+    text: "Circulums",
+    url: "/admin/circulums",
   },
   { icon: <HiUsers className="icon-md" />, text: "Users", url: "/admin/users" },
   {
@@ -45,8 +50,9 @@ const linkList = [
 ];
 
 const active_text = {
-  Dashboard: "dashboard",
+  // Dashboard: "dashboard",
   Courses: "course",
+  Circulums: "circulum",
   Users: "user",
   Workshops: "workshop",
   Testimonials: "testimonial",
