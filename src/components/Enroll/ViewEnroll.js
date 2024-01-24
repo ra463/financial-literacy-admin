@@ -87,7 +87,7 @@ const ViewEnroll = () => {
                     <p className="mb-0">
                       <strong>Mobile No.</strong>
                     </p>
-                    <p>{loading ? <Skeleton /> : enroll?.mobile_no}</p>
+                    <p>{loading ? <Skeleton /> : enroll?.phone}</p>
                   </Col>
                   <Col md={4}>
                     <p className="mb-0">
@@ -117,7 +117,13 @@ const ViewEnroll = () => {
                       whiteSpace: "pre-wrap",
                     }}
                   >
-                    {loading ? <Skeleton /> : enroll.description}
+                    {loading ? (
+                      <Skeleton />
+                    ) : enroll?.description ? (
+                      enroll.description
+                    ) : (
+                      "Not Available"
+                    )}
                   </Col>
                 </Row>
               </Card.Body>

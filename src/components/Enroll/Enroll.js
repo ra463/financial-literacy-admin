@@ -150,7 +150,7 @@ export default function Enroll() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <CustomSkeleton resultPerPage={resultPerPage} column={6} />
+                    <CustomSkeleton resultPerPage={resultPerPage} column={7} />
                   ) : enrolls && enrolls.length > 0 ? (
                     enrolls.map((enroll, i) => (
                       <tr key={enroll?._id} className="odd">
@@ -186,7 +186,7 @@ export default function Enroll() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="6" className="text-center">
+                      <td colSpan="7" className="text-center">
                         No Enrollment(s) Found
                       </td>
                     </tr>

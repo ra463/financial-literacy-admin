@@ -172,7 +172,7 @@ export default function Circulum() {
                     {loading ? (
                       <CustomSkeleton
                         resultPerPage={resultPerPage}
-                        column={8}
+                        column={4}
                       />
                     ) : circulum && circulum.length > 0 ? (
                       circulum.map((course, i) => (
