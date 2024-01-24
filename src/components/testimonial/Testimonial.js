@@ -123,7 +123,7 @@ export default function Testimonial() {
                   <InputGroup>
                     <Form.Control
                       aria-label="Search Input"
-                      placeholder="Search"
+                      placeholder="Search By Title"
                       type="search"
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}

@@ -44,7 +44,6 @@ export default function Header({ sidebarHandler }) {
     ctxDispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("token");
-
     navigate("/");
   };
 

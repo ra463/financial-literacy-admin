@@ -7,7 +7,7 @@ export default function UnprotectedRoute({ children }) {
   const { userInfo } = state;
   return userInfo ? (
     userInfo.role === "admin" ? (
-      <Navigate to="/admin/users" />
+      <Navigate to="/admin/dashboard" />
     ) : (
       <Navigate to="/intermediary/dashboard" />
     )

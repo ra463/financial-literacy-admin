@@ -4,17 +4,13 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import AdminProtectedRoute from "./components/protectedRoute/AdminProtectedRoute";
-
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import SideNavbar from "./components/layout/SideNavBar";
 import NotFound from "./components/layout/NotFound";
-
 import ViewProfile from "./components/profile/ViewProfile";
-
-import Users from "./components/user/Users";
-import ViewUser from "./components/user/ViewUser";
-
+// import Users from "./components/user/Users";
+// import ViewUser from "./components/user/ViewUser";
 import AdminLoginScreen from "./components/AdminLoginScreen";
 import UnprotectedRoute from "./components/protectedRoute/UnprotectedRoute";
 // import Courses from "./components/courses/Course";
@@ -45,9 +41,9 @@ function App() {
   const sidebarHandler = () => setExpandState((prev) => !prev);
 
   const routeList = [
-    { path: "/view-profile", element: <ViewProfile /> },
     { path: "/admin/dashboard", element: <Dashboard /> },
-    { path: "/admin/users", element: <Users /> },
+    { path: "/view-profile", element: <ViewProfile /> },
+    // { path: "/admin/users", element: <Users /> },
     // { path: "/admin/courses", element: <Courses /> },
     { path: "/admin/workshops", element: <Workshop /> },
     { path: "/admin/enrolls", element: <Enroll /> },
@@ -56,7 +52,7 @@ function App() {
     { path: "/admin/queries", element: <Query /> },
     { path: "/admin/circulums", element: <Circulum /> },
     // { path: "/admin/view/course/:id", element: <ViewCourse /> },
-    { path: "/admin/view/user/:id", element: <ViewUser /> },
+    // { path: "/admin/view/user/:id", element: <ViewUser /> },
     // { path: "/admin/view/course/:id/:sectionId", element: <ViewSection /> },
     { path: "/admin/view/workshop/:id", element: <Viewworkshop /> },
     { path: "/admin/view/transaction/:id", element: <ViewTransaction /> },

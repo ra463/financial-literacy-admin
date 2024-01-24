@@ -9,8 +9,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { HiUsers } from "react-icons/hi";
-import { BiSolidBook } from "react-icons/bi";
+// import { HiUsers } from "react-icons/hi";
+// import { BiSolidBook } from "react-icons/bi";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { MdMoney, MdQuestionAnswer } from "react-icons/md";
 import { GiNetworkBars } from "react-icons/gi";
@@ -110,7 +110,7 @@ export default function Dashboard() {
             </Row>
 
             <Row className="mb-3">
-              <Col lg={3} sm={6}>
+              {/* <Col lg={3} sm={6}>
                 {loading ? (
                   <Skeleton count={5} />
                 ) : (
@@ -154,7 +154,7 @@ export default function Dashboard() {
                     </Link>
                   </div>
                 )}
-              </Col>
+              </Col> */}
               <Col lg={3} sm={6}>
                 {loading ? (
                   <Skeleton count={5} />

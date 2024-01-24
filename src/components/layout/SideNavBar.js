@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { Store } from "../../Store";
 import "./SideNavBar.css";
 import { MdOutlineReviews, MdOutlineSpaceDashboard } from "react-icons/md";
-import { HiUsers } from "react-icons/hi";
+// import { HiUsers } from "react-icons/hi";
 import { BiSolidBook } from "react-icons/bi";
 import { FaRegStar, FaSignOutAlt } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
@@ -27,7 +27,7 @@ const linkList = [
     text: "Circulums",
     url: "/admin/circulums",
   },
-  { icon: <HiUsers className="icon-md" />, text: "Users", url: "/admin/users" },
+  // { icon: <HiUsers className="icon-md" />, text: "Users", url: "/admin/users" },
   {
     icon: <GrWorkshop className="icon-md" />,
     text: "Workshops",
@@ -54,7 +54,6 @@ const active_text = {
   Dashboard: "dashboard",
   Enrollments: "enroll",
   Circulums: "circulum",
-  Users: "user",
   Workshops: "workshop",
   Testimonials: "testimonial",
   Transactions: "transaction",
@@ -67,11 +66,11 @@ export default function SideNavbar({ isExpanded }) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const navigate = useNavigate();
+
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("token");
-
     navigate("/");
   };
 
@@ -97,10 +96,9 @@ export default function SideNavbar({ isExpanded }) {
             }}
             className="brand-link"
           >
-            <img src="/karmill.jpg" alt="" width={"210px"} height={"60px"} />
-            {/* <span className="brand-text ms-2 font-weight-light">
-              Karmill Financial Literacy
-            </span> */}
+            <Link to="/admin/dashboard">
+              <img src="/img.jpg" alt="" width={"210px"} height={"60px"} />
+            </Link>
           </div>
 
           <div className="sidebar">
