@@ -9,8 +9,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { motion } from "framer-motion";
-// import { HiUsers } from "react-icons/hi";
-// import { BiSolidBook } from "react-icons/bi";
+import { HiUsers } from "react-icons/hi";
+import { BiSolidBook } from "react-icons/bi";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { MdMoney, MdQuestionAnswer } from "react-icons/md";
 import { GiNetworkBars } from "react-icons/gi";
@@ -110,23 +110,23 @@ export default function Dashboard() {
             </Row>
 
             <Row className="mb-3">
-              {/* <Col lg={3} sm={6}>
+              <Col lg={3} sm={6}>
                 {loading ? (
                   <Skeleton count={5} />
                 ) : (
                   <div className="small-box bg-info">
                     <div className="inner">
                       <h3>
-                        {summary.users && summary.users[0]
-                          ? summary.users[0].total
+                        {summary.circulum && summary.circulum[0]
+                          ? summary.circulum[0].total
                           : 0}
                       </h3>
-                      <p>Total Users</p>
+                      <p>Total Circulums</p>
                     </div>
                     <div className="icon">
                       <HiUsers />
                     </div>
-                    <Link to="/admin/users" className="small-box-footer">
+                    <Link to="/admin/circulums" className="small-box-footer">
                       More info {<FaArrowCircleRight />}
                     </Link>
                   </div>
@@ -139,22 +139,22 @@ export default function Dashboard() {
                   <div className="small-box bg-success">
                     <div className="inner">
                       <h3>
-                        {summary.courses && summary.courses[0]
-                          ? summary.courses[0].total
+                        {summary.enroll && summary.enroll[0]
+                          ? summary.enroll[0].total
                           : 0}
                         <sup style={{ fontSize: 20 }}></sup>
                       </h3>
-                      <p>Total Courses</p>
+                      <p>Total Enrollment</p>
                     </div>
                     <div className="icon">
                       <BiSolidBook />
                     </div>
-                    <Link to="/admin/courses" className="small-box-footer">
+                    <Link to="/admin/enrolls" className="small-box-footer">
                       More info {<FaArrowCircleRight />}
                     </Link>
                   </div>
                 )}
-              </Col> */}
+              </Col>
               <Col lg={3} sm={6}>
                 {loading ? (
                   <Skeleton count={5} />
