@@ -8,6 +8,7 @@ import { MdOutlineReviews, MdOutlineSpaceDashboard } from "react-icons/md";
 import { HiUsers } from "react-icons/hi";
 import { BiSolidBook } from "react-icons/bi";
 import { FaRegStar, FaSignOutAlt } from "react-icons/fa";
+import { BsStars } from "react-icons/bs";
 import { GrTransaction, GrWorkshop } from "react-icons/gr";
 
 const linkList = [
@@ -16,11 +17,11 @@ const linkList = [
     text: "Dashboard",
     url: "/admin/dashboard",
   },
-  // {
-  //   icon: <BiSolidBook className="icon-md" />,
-  //   text: "Courses",
-  //   url: "/admin/courses",
-  // },
+  {
+    icon: <BsStars className="icon-md" />,
+    text: "Enrollments",
+    url: "/admin/enrolls",
+  },
   {
     icon: <BiSolidBook className="icon-md" />,
     text: "Circulums",
@@ -50,8 +51,8 @@ const linkList = [
 ];
 
 const active_text = {
-  // Dashboard: "dashboard",
-  Courses: "course",
+  Dashboard: "dashboard",
+  Enrollments: "enroll",
   Circulums: "circulum",
   Users: "user",
   Workshops: "workshop",

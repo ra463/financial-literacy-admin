@@ -32,6 +32,8 @@ import ViewQuery from "./components/query/ViewQuery";
 import Circulum from "./components/circulum/Circulum";
 import ViewCirculum from "./components/circulum/ViewCirculum";
 import ViewCirculumSection from "./components/circulum/ViewSection";
+import Enroll from "./components/Enroll/Enroll";
+import ViewEnroll from "./components/Enroll/ViewEnroll";
 
 function App() {
   const { state } = useContext(Store);
@@ -48,6 +50,7 @@ function App() {
     { path: "/admin/users", element: <Users /> },
     // { path: "/admin/courses", element: <Courses /> },
     { path: "/admin/workshops", element: <Workshop /> },
+    { path: "/admin/enrolls", element: <Enroll /> },
     { path: "/admin/transactions", element: <Transaction /> },
     { path: "/admin/testimonials", element: <Testimonial /> },
     { path: "/admin/queries", element: <Query /> },
@@ -64,6 +67,7 @@ function App() {
       path: "/admin/view/circulum/:id/:sectionId",
       element: <ViewCirculumSection />,
     },
+    { path: "/admin/view/enroll/:id", element: <ViewEnroll /> },
   ];
 
   return (
