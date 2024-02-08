@@ -27,7 +27,7 @@ export default function Testimonial() {
   const { token } = state;
 
   const [curPage, setCurPage] = useState(1);
-  const [resultPerPage, setResultPerPage] = useState(10);
+  const [resultPerPage, setResultPerPage] = useState(5);
   const [searchInput, setSearchInput] = useState("");
   const [query, setQuery] = useState("");
   const [del, setDel] = useState(false);
