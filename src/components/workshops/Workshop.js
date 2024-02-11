@@ -138,11 +138,10 @@ export default function Workshop() {
                 <thead>
                   <tr>
                     <th>S.No</th>
-                    <th>Name</th>
+                    <th>Submitted By</th>
                     <th>Email</th>
                     <th>Mobile No.</th>
                     <th>Submitted Date</th>
-                    <th>Submitted By</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -160,9 +159,6 @@ export default function Workshop() {
                           {getDateTime(
                             workshop?.createdAt && workshop?.createdAt
                           )}
-                        </td>
-                        <td>
-                          {workshop?.user.firstname} {workshop?.user.lastname}
                         </td>
                         <td>
                           <Button
