@@ -183,7 +183,13 @@ const ViewCirculum = () => {
                       whiteSpace: "pre-wrap",
                     }}
                   >
-                    {loading ? <Skeleton /> : circulum.description}
+                    {loading ? (
+                      <Skeleton />
+                    ) : circulum.description ? (
+                      circulum.description
+                    ) : (
+                      "N/A"
+                    )}
                   </Col>
                 </Row>
               </Card.Body>

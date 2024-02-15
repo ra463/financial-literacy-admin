@@ -126,7 +126,7 @@ const ViewCirculumSection = () => {
         ) : (
           <>
             <Card style={{ marginTop: "1rem" }}>
-              <Card.Header className="view-section">
+              <Card.Header className="edit-section">
                 <Card.Title>
                   All Lesson(s) -{" "}
                   {loading ? <Skeleton /> : `${Lecture?.section.title}`}

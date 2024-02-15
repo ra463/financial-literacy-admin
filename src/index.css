@@ -540,14 +540,14 @@ table.table {
   cursor: pointer;
 }
 
-.view-section{
+.edit-section{
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.view-section > div {
+.edit-section > div {
   display: flex;
   gap: 10px;
 }
