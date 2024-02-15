@@ -17,6 +17,7 @@ import { motion } from "framer-motion";
 import DeleteLesson from "./DeleteLesson";
 import EditLesson from "./EditLesson";
 import AddLesson from "./AddLesson";
+import EditSection from "./EditSection";
 
 const ViewCirculumSection = () => {
   const { state } = useContext(Store);
@@ -25,6 +26,8 @@ const ViewCirculumSection = () => {
 
   const [lessonModalShow, setLessonModalShow] = useState(false);
   const [editLessonDetailsModalShow, setEditLessonDetailsModalShow] =
+    useState(false);
+  const [editSectionTitleModalShow, setEditSectionTitleModalShow] =
     useState(false);
   const [deleteBox, setDeleteBox] = useState(false);
   const [lessonId, setLessonId] = useState("");
@@ -123,14 +126,17 @@ const ViewCirculumSection = () => {
         ) : (
           <>
             <Card style={{ marginTop: "1rem" }}>
-              <Card.Header>
+              <Card.Header className="view-section">
                 <Card.Title>
                   All Lesson(s) -{" "}
                   {loading ? <Skeleton /> : `${Lecture?.section.title}`}
                 </Card.Title>
-                <div className="card-tools">
+                <div>
                   <Button onClick={() => setLessonModalShow(true)}>
                     Add Lesson
+                  </Button>
+                  <Button onClick={() => setEditSectionTitleModalShow(true)}>
+                    Edit Section Title
                   </Button>
                 </div>
               </Card.Header>
@@ -213,11 +219,17 @@ const ViewCirculumSection = () => {
               id={id}
               sectionId={sectionId}
             />
+            <EditSection
+              show={editSectionTitleModalShow}
+              onHide={() => setEditSectionTitleModalShow(false)}
+              id={id}
+              sectionId={sectionId}
+              sectionTitle={Lecture?.section.title}
+            />
             <ToastContainer />
           </>
         )}
       </Container>
-
       <DeleteLesson
         show={deleteBox}
         onHide={() => setDeleteBox(false)}

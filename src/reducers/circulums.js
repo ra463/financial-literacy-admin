@@ -117,6 +117,22 @@ const deleteCirculumLessonReducer = (state, action) => {
   }
 };
 
+const updateCirculumSectionReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_SECTION_REQUEST":
+      return { ...state, loading: true };
+    case "UPDATE_SECTION_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+      };
+    case "UPDATE_SECTION_FAIL":
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 const deleteCirculumSectionReducer = (state, action) => {
   switch (action.type) {
     case "DELETE_SECTION_REQUEST":
@@ -156,6 +172,7 @@ export {
   createCirculumSectionReducer,
   addCirculumLessonReducer,
   updateCirculumLessonReducer,
+  updateCirculumSectionReducer,
   deleteCirculumLessonReducer,
   deleteCirculumSectionReducer,
   deleteCirculumReducer,

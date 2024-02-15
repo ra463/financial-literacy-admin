@@ -1,68 +1,51 @@
 import React, { useReducer, useContext, useState, useEffect } from "react";
 import { Store } from "../../Store";
 import { getError } from "../../utils/error";
-import { addCirculumLessonReducer as reducer } from "../../reducers/circulums";
+import { updateCirculumSectionReducer as reducer } from "../../reducers/circulums";
 import { toast, ToastContainer } from "react-toastify";
 import { Modal, Form, Button, Container } from "react-bootstrap";
 import axiosInstance from "../../utils/axiosUtil";
 import LoadingBox from "../layout/LoadingBox";
 
-export default function AddLesson({ id, sectionId, ...props }) {
+export default function EditSection({ id, sectionId, sectionTitle, ...props }) {
   const { state } = useContext(Store);
   const { token } = state;
 
-  const [{ error, loading }, dispatch] = useReducer(reducer, {
+  const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
   });
 
-  const [title, setTitle] = useState("");
-  const [lesson_desc, setLesson_desc] = useState("");
+  const [title, setTitle] = useState(sectionTitle);
 
   useEffect(() => {
-    if (!props.show) {
-      setTitle("");
-      setLesson_desc("");
-    }
-  }, [props.show]);
+    setTitle(sectionTitle); // Update title state when sectionTitle prop changes
+  }, [sectionTitle, props.show]);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
+  const updateSection = async () => {
     try {
-      dispatch({ type: "ADD_REQUEST" });
-
-      const { data } = await axiosInstance.post(
-        `/api/admin/create-circulum-lesson/${id}/${sectionId}`,
+      dispatch({ type: "UPDATE_SECTION_REQUEST" });
+      const res = await axiosInstance.patch(
+        `/api/admin/update-circulum-section/${id}/${sectionId}`,
         {
           title,
-          lesson_desc,
         },
         {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
+          headers: { Authorization: token },
         }
       );
-
-      if (data) {
-        dispatch({ type: "ADD_SUCCESS" });
-        toast.success("Lesson Added Succesfully", {
+      if (res.data) {
+        dispatch({ type: "UPDATE_SECTION_SUCCESS" });
+        toast.success("Section updated Succesfully", {
           position: toast.POSITION.TOP_CENTER,
         });
-        props.onHide();
         setTimeout(() => {
           window.location.reload();
         }, 3000);
-      } else {
-        toast.error(data.error.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
       }
     } catch (err) {
       dispatch({
-        type: "ADD_FAIL",
+        type: "UPDATE_SECTION_FAIL",
         payload: getError(err),
       });
       toast.error(getError(error), {
@@ -70,6 +53,12 @@ export default function AddLesson({ id, sectionId, ...props }) {
       });
     }
   };
+
+  useEffect(() => {
+    if (!props.show) {
+      setTitle("");
+    }
+  }, [props.show]);
 
   return (
     <Modal
@@ -79,9 +68,11 @@ export default function AddLesson({ id, sectionId, ...props }) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">Add Lesson</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Edit Section Title
+        </Modal.Title>
       </Modal.Header>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Modal.Body>
           <Container className="small-container">
             <Form.Group className="mb-3" controlId="title">
@@ -92,18 +83,6 @@ export default function AddLesson({ id, sectionId, ...props }) {
                 required
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="title">
-              <Form.Label>Lesson Description</Form.Label>
-              <Form.Control
-                value={lesson_desc}
-                onChange={(e) => setLesson_desc(e.target.value)}
-                as="textarea"
-                rows={5}
-                required
-              />
-            </Form.Group>
-
             <ToastContainer />
           </Container>
         </Modal.Body>
@@ -115,8 +94,9 @@ export default function AddLesson({ id, sectionId, ...props }) {
             variant="success"
             type="submit"
             disabled={loading ? true : false}
+            onClick={updateSection}
           >
-            {loading ? <LoadingBox></LoadingBox> : "Add Lesson"}
+            {loading ? <LoadingBox></LoadingBox> : "Update"}
           </Button>
         </Modal.Footer>
       </Form>
