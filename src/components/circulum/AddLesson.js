@@ -33,11 +33,8 @@ export default function AddLesson({ id, sectionId, ...props }) {
       dispatch({ type: "ADD_REQUEST" });
 
       const { data } = await axiosInstance.post(
-        `/api/admin/create-circulum-lesson/${id}/${sectionId}`,
-        {
-          title,
-          lesson_desc,
-        },
+        `/api/admin/create-lesson/${id}/${sectionId}`,
+        { title, lesson_desc },
         {
           headers: {
             "Content-Type": "application/json",

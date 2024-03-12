@@ -40,7 +40,7 @@ export default function EditLesson({
       dispatch({ type: "UPDATE_REQUEST" });
 
       const { data } = await axiosInstance.patch(
-        `/api/admin/update-circulum-title-description/${id}/${sectionId}/${lessonId}`,
+        `/api/admin/update-lesson/${id}/${sectionId}/${lessonId}`,
         { title, lesson_desc },
         {
           headers: {

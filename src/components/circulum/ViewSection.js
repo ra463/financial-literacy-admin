@@ -53,7 +53,7 @@ const ViewCirculumSection = () => {
     try {
       dispatch1({ type: "DELETE_REQUEST" });
       const res = await axiosInstance.delete(
-        `/api/admin/delete-circulum-lesson/${id}/${sectionId}/${lessonId}`,
+        `/api/admin/delete-lesson/${id}/${sectionId}/${lessonId}`,
         {
           headers: { Authorization: token },
         }

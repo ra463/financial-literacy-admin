@@ -9,7 +9,6 @@ import axiosInstance from "../../utils/axiosUtil";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { motion } from "framer-motion";
-import LoadingBox from "../layout/LoadingBox";
 import {
   deleteCirculumSectionReducer,
   viewCirculumReducer as reducer,
@@ -22,7 +21,7 @@ const ViewCirculum = () => {
   const { state } = useContext(Store);
   const { token } = state;
   const navigate = useNavigate();
-  const { id } = useParams(); // user/:id
+  const { id } = useParams();
 
   const [modalShow, setModalShow] = useState(false);
   const [sectionModalShow, setSectionModalShow] = useState(false);
@@ -51,7 +50,7 @@ const ViewCirculum = () => {
     try {
       dispatch1({ type: "DELETE_SECTION_REQUEST" });
       const res = await axiosInstance.delete(
-        `/api/admin/delete-circulum-section/${id}/${sectionId}`,
+        `/api/admin/delete-section/${id}/${sectionId}`,
         {
           headers: { Authorization: token },
         }
@@ -198,7 +197,14 @@ const ViewCirculum = () => {
             <Card style={{ marginTop: "1rem" }}>
               <Card.Header>
                 <Card.Title>All Section's</Card.Title>
-                <div className="card-tools">
+                <div className="card-tools edit-btn">
+                  <Button
+                    onClick={() => {
+                      navigate(`/admin/circulum/edit-circulum/${circulum._id}`);
+                    }}
+                  >
+                    <FaEdit /> Edit Sequence
+                  </Button>
                   <Button onClick={() => setSectionModalShow(true)}>
                     Create Section
                   </Button>
@@ -219,7 +225,7 @@ const ViewCirculum = () => {
                           }}
                         >
                           <Card.Title>
-                            Section {i + 1} - {Lecture.section.title}
+                            Section {Lecture.sequence} - {Lecture.section.title}
                           </Card.Title>
                           <div
                             style={{
@@ -240,7 +246,7 @@ const ViewCirculum = () => {
                               variant="danger"
                               onClick={() => setThings(Lecture._id)}
                             >
-                              {deleteLoading ? <LoadingBox /> : <FaTrash />}
+                              <FaTrash />
                             </Button>
                           </div>
                         </Card.Header>

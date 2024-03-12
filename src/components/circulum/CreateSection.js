@@ -31,7 +31,7 @@ export default function CreateSection(props) {
       dispatch({ type: "CREATE_REQUEST" });
 
       const { data } = await axiosInstance.post(
-        `/api/admin/create-circulum-section/${id}`,
+        `/api/admin/create-section/${id}`,
         { title },
         {
           headers: {

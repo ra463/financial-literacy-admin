@@ -165,6 +165,20 @@ const deleteCirculumReducer = (state, action) => {
   }
 };
 
+const shuffleCirculumReducer = (state, action) => {
+  switch (action.type) {
+    case "SHUFFLE _REQUEST":
+      return { ...state, loading: true };
+    case "SHUFFLE _SUCCESS":
+      return { ...state, loading: false };
+    case "SHUFFLE _FAIL":
+      return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
 export {
   getCirculumReducer,
   createCirculumReducer,
@@ -176,4 +190,5 @@ export {
   deleteCirculumLessonReducer,
   deleteCirculumSectionReducer,
   deleteCirculumReducer,
+  shuffleCirculumReducer,
 };

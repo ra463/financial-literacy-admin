@@ -26,10 +26,8 @@ export default function EditSection({ id, sectionId, sectionTitle, ...props }) {
     try {
       dispatch({ type: "UPDATE_SECTION_REQUEST" });
       const res = await axiosInstance.patch(
-        `/api/admin/update-circulum-section/${id}/${sectionId}`,
-        {
-          title,
-        },
+        `/api/admin/update-section/${id}/${sectionId}`,
+        { title },
         {
           headers: { Authorization: token },
         }

@@ -551,3 +551,9 @@ table.table {
   display: flex;
   gap: 10px;
 }
+
+.edit-btn{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
