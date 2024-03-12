@@ -198,13 +198,17 @@ const ViewCirculum = () => {
               <Card.Header>
                 <Card.Title>All Section's</Card.Title>
                 <div className="card-tools edit-btn">
-                  <Button
-                    onClick={() => {
-                      navigate(`/admin/circulum/edit-circulum/${circulum._id}`);
-                    }}
-                  >
-                    <FaEdit /> Edit Sequence
-                  </Button>
+                  {circulum?.lectures.length > 1 && (
+                    <Button
+                      onClick={() => {
+                        navigate(
+                          `/admin/circulum/edit-circulum/${circulum._id}`
+                        );
+                      }}
+                    >
+                      <FaEdit /> Edit Sequence
+                    </Button>
+                  )}
                   <Button onClick={() => setSectionModalShow(true)}>
                     Create Section
                   </Button>

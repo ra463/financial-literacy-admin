@@ -103,7 +103,7 @@ const EditSequence = () => {
         `/api/admin/shuffle-sequence/${id}`,
         { section_array },
         {
-          headers: { authorization: `Bearer ${token}` },
+          headers: { Authorization: token },
         }
       );
       if (data.success) {
@@ -150,8 +150,7 @@ const EditSequence = () => {
                     <p>No Lecture(s) Found</p>
                   )}
                   <tbody>
-                    {array.length &&
-                      circulum?.lectures.length > 0 &&
+                    {array.length && circulum?.lectures.length > 0 ? (
                       circulum?.lectures.map((Lecture, index) => (
                         <tr key={index}>
                           <td>{Lecture.sequence}</td>
@@ -175,7 +174,14 @@ const EditSequence = () => {
                             />
                           </td>
                         </tr>
-                      ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={3} className="text-center">
+                          No Lesson(s) Found
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </Table>
 
