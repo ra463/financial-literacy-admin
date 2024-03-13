@@ -55,4 +55,23 @@ const viewTesimonialReducer = (state, action) => {
   }
 };
 
-export { addTestimonialReducer, getTestimonialReducer, viewTesimonialReducer };
+const shuffleTestimonialReducer = (state, action) => {
+  switch (action.type) {
+    case "SHUFFLE _REQUEST":
+      return { ...state, loading: true };
+    case "SHUFFLE _SUCCESS":
+      return { ...state, loading: false };
+    case "SHUFFLE _FAIL":
+      return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export {
+  addTestimonialReducer,
+  getTestimonialReducer,
+  viewTesimonialReducer,
+  shuffleTestimonialReducer,
+};

@@ -119,6 +119,13 @@ export default function Testimonial() {
                 <Button onClick={() => setModalShow(true)}>
                   Add Testimonial
                 </Button>
+                <Button
+                  onClick={() => {
+                    navigate(`/admin/testimonial/edit-sequence`);
+                  }}
+                >
+                  <FaEdit /> Edit Sequence
+                </Button>
                 <div className="search-box float-end">
                   <InputGroup>
                     <Form.Control
