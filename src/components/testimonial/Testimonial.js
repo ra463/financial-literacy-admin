@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import CustomPagination from "../layout/CustomPagination";
 import axiosInstance from "../../utils/axiosUtil";
-import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import { FaEye, FaEdit, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import CustomSkeleton from "../layout/CustomSkeleton";
 import LoadingBox from "../layout/LoadingBox";
