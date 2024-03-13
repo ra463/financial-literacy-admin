@@ -120,6 +120,7 @@ export default function Testimonial() {
                   Add Testimonial
                 </Button>
                 <Button
+                  style={{ marginLeft: "7px" }}
                   onClick={() => {
                     navigate(`/admin/testimonial/edit-sequence`);
                   }}

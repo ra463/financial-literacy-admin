@@ -70,8 +70,6 @@ const EditTestSequence = () => {
     }
   }, [testimonials]);
 
-  console.log(array);
-
   const submitHandler = async () => {
     let temp = [];
     for (let i of array) {
