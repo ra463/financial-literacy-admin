@@ -138,7 +138,7 @@ const EditTestSequence = () => {
           <>
             <Card>
               <Card.Header>
-                <Card.Title>All Section's</Card.Title>
+                <Card.Title>All Testimonial's</Card.Title>
               </Card.Header>
               <Card.Body className="view-section">
                 <Table responsive striped bordered hover>
