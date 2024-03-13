@@ -27,6 +27,7 @@ const EditSequence = () => {
   const { id } = useParams();
 
   const [array, setArray] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [{ error, circulum }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -88,6 +89,7 @@ const EditSequence = () => {
     }
 
     try {
+      setLoading(true);
       dispatch1({ type: "SHUFFLE_REQUEST" });
       const section_array = array.map((data) => {
         return {
@@ -107,6 +109,7 @@ const EditSequence = () => {
         }
       );
       if (data.success) {
+        setLoading(false);
         toast.success("Sequence Updated Successfully");
         dispatch1({ type: "SHUFFLE_SUCCESS" });
         setTimeout(() => {
@@ -115,6 +118,7 @@ const EditSequence = () => {
       }
     } catch (error) {
       dispatch1({ type: "SHUFFLE_FAIL" });
+      setLoading(false);
       toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -188,7 +192,7 @@ const EditSequence = () => {
                 <Row className="align-items-center mt-2">
                   <Col className="input-fieleds" sm={12} md={8}>
                     <Button onClick={submitHandler}>
-                      {shuffle_loading ? <Spinner /> : "Update Sequence"}
+                      {loading ? <Spinner /> : "Update Sequence"}
                     </Button>
                   </Col>
                 </Row>
